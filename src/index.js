@@ -7,7 +7,7 @@ import csv from 'fast-csv';
 import { StapleTemplateShoppingListService, TagService } from 'smart-grocery-parse-server-common';
 import './bootstrap';
 
-const optionDefinitions = [{ name: 'csvFilePath', type: String }];
+const optionDefinitions = [{ name: 'csvFilePath', type: String }, { name: 'delimiter', type: String }, { name: 'rowDelimiter', type: String }];
 const options = commandLineArgs(optionDefinitions);
 
 const loadAllTags = async () => {
@@ -21,8 +21,8 @@ const start = async () => {
 
   fs
     .createReadStream(options.csvFilePath)
-    .pipe(csv.parse({ headers: false }))
-    .pipe(csv.format({ headers: false }))
+    .pipe(csv.parse({ headers: false, delimiter: options.delimiter ? options.delimiter : ',' }))
+    .pipe(csv.format({ headers: false, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' }))
     .transform(async (rarRow, next) => {
       const row = Immutable.fromJS(rarRow);
       const description = row.first().trim();
