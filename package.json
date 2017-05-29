@@ -22,7 +22,7 @@
     "fast-csv": "^2.4.0",
     "immutable": "^3.8.1",
     "parse": "^1.9.2",
-    "smart-grocery-parse-server-common": "^0.1.120"
+    "smart-grocery-parse-server-common": "^0.1.122"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -37,7 +37,7 @@
     "eslint-plugin-react": "^7.0.1",
     "flow-bin": "^0.47.0",
     "jest": "^20.0.4",
-    "lint-staged": "^3.5.0",
+    "lint-staged": "^3.5.1",
     "nodemon": "^1.11.0",
     "prettier": "^1.3.1",
     "uuid": "^3.0.1"
