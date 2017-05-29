@@ -19,6 +19,7 @@
   "homepage": "https://bitbucket.org/microbusiness/smart-grocery-helper-tools#readme",
   "dependencies": {
     "immutable": "^3.8.1",
+    "parse": "^1.9.2",
     "smart-grocery-parse-server-common": "^0.1.120"
   },
   "devDependencies": {
