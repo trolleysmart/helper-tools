@@ -21,12 +21,12 @@ const start = async () => {
 
   fs
     .createReadStream(options.csvFilePath)
-    .pipe(csv.parse({ headers: false, delimiter: options.delimiter ? options.delimiter : ',' }))
+    .pipe(csv.parse({ headers: false, delimiter: options.delimiter ? options.delimiter : ',', trim: true }))
     .pipe(csv.format({ headers: false, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' }))
     .transform(async (rarRow, next) => {
       const row = Immutable.fromJS(rarRow);
-      const description = row.first().trim();
-      const tags = row.skip(1).map(_ => _.trim()).toSet();
+      const description = row.first();
+      const tags = row.skip(1).toSet();
 
       if (tags.filterNot(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0)).isEmpty()) {
         await StapleTemplateShoppingListService.create(
