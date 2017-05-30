@@ -4,11 +4,21 @@ import Immutable, { Map } from 'immutable';
 import commandLineArgs from 'command-line-args';
 import fs from 'fs';
 import csv from 'fast-csv';
+import Parse from 'parse/node';
 import { StapleTemplateShoppingListService, TagService } from 'smart-grocery-parse-server-common';
-import './bootstrap';
 
-const optionDefinitions = [{ name: 'csvFilePath', type: String }, { name: 'delimiter', type: String }, { name: 'rowDelimiter', type: String }];
+const optionDefinitions = [
+  { name: 'csvFilePath', type: String },
+  { name: 'delimiter', type: String },
+  { name: 'rowDelimiter', type: String },
+  { name: 'applicationId', type: String },
+  { name: 'javaScriptKey', type: String },
+  { name: 'parseServerUrl', type: String },
+];
 const options = commandLineArgs(optionDefinitions);
+
+Parse.initialize(options.applicationId ? options.applicationId : 'app_id', options.javaScriptKey ? options.javaScriptKey : 'javascript_key');
+Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
 
 const loadAllTags = async () => {
   const result = await TagService.search(Map({ limit: 1000 }));
