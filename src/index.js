@@ -1,9 +1,10 @@
 // @flow
 
-import Immutable, { List, Map } from 'immutable';
+import BluebirdPromise from 'bluebird';
+import Immutable, { List, Map, Range } from 'immutable';
 import commandLineArgs from 'command-line-args';
 import fs from 'fs';
-import csv from 'fast-csv';
+import csvParser from 'csv-parse';
 import Parse from 'parse/node';
 import { StapleTemplateShoppingListService, TagService } from 'smart-grocery-parse-server-common';
 
@@ -50,41 +51,55 @@ const loadAllStapleTemplateShoppingList = async () => {
   return stapleTemplateShoppingListItems;
 };
 
+const splitIntoChunks = (list, chunkSize) => Range(0, list.count(), chunkSize).map(chunkStart => list.slice(chunkStart, chunkStart + chunkSize));
+
 const start = async () => {
   const allTags = await loadAllTags();
   const allStapleTemplateShoppingListItems = await loadAllStapleTemplateShoppingList();
 
-  fs
-    .createReadStream(options.csvFilePath)
-    .pipe(csv.parse({ headers: false, delimiter: options.delimiter ? options.delimiter : ',', trim: true }))
-    .pipe(csv.format({ headers: false, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' }))
-    .transform(async (rarRow, next) => {
-      const row = Immutable.fromJS(rarRow);
-      const description = row.first();
-      const tags = row.skip(1).toSet();
+  const parser = csvParser(
+    { delimiter: options.delimiter ? options.delimiter : ',', trim: true, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' },
+    async (err, data) => {
+      if (err) {
+        console.log(err);
 
-      if (tags.filterNot(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0)).isEmpty()) {
-        const foundItem = allStapleTemplateShoppingListItems.find(_ => _.get('description').localeCompare(description) === 0);
-
-        if (foundItem) {
-          await StapleTemplateShoppingListService.update(
-            foundItem.set('tagIds', tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id'))),
-          );
-        } else {
-          await StapleTemplateShoppingListService.create(
-            Map({
-              description,
-              tagIds: tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id')),
-            }),
-          );
-        }
-
-        next();
-      } else {
-        console.log(`Provided tags not found: ${row.skip(1).toJS()}`);
-        next(`Provided tags not found: ${row.skip(1).toJS()}`);
+        return;
       }
-    });
+
+      const splittedRows = splitIntoChunks(Immutable.fromJS(data), 100);
+
+      await BluebirdPromise.each(splittedRows.toArray(), rowChunck =>
+        Promise.all(
+          rowChunck.map(async (rawRow) => {
+            const row = Immutable.fromJS(rawRow);
+            const description = row.first();
+            const tags = row.skip(1).toSet();
+
+            if (tags.filterNot(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0)).isEmpty()) {
+              const foundItem = allStapleTemplateShoppingListItems.find(_ => _.get('description').localeCompare(description) === 0);
+
+              if (foundItem) {
+                await StapleTemplateShoppingListService.update(
+                  foundItem.set('tagIds', tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id'))),
+                );
+              } else {
+                await StapleTemplateShoppingListService.create(
+                  Map({
+                    description,
+                    tagIds: tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id')),
+                  }),
+                );
+              }
+            } else {
+              console.log(`Provided tags not found: ${row.skip(1).toJS()}`);
+            }
+          }),
+        ),
+      );
+    },
+  );
+
+  fs.createReadStream(options.csvFilePath).pipe(parser);
 };
 
 start();
