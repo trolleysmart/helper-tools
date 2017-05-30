@@ -1,6 +1,6 @@
 // @flow
 
-import Immutable, { Map } from 'immutable';
+import Immutable, { List, Map } from 'immutable';
 import commandLineArgs from 'command-line-args';
 import fs from 'fs';
 import csv from 'fast-csv';
@@ -21,13 +21,38 @@ Parse.initialize(options.applicationId ? options.applicationId : 'app_id', optio
 Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
 
 const loadAllTags = async () => {
-  const result = await TagService.search(Map({ limit: 1000 }));
+  let tags = List();
+  const result = await TagService.searchAll(Map({}));
 
-  return result;
+  try {
+    result.event.subscribe(info => (tags = tags.push(info)));
+
+    await result.promise;
+  } finally {
+    result.event.unsubscribeAll();
+  }
+
+  return tags;
+};
+
+const loadAllStapleTemplateShoppingList = async () => {
+  let stapleTemplateShoppingListItems = List();
+  const result = await StapleTemplateShoppingListService.searchAll(Map({}));
+
+  try {
+    result.event.subscribe(info => (stapleTemplateShoppingListItems = stapleTemplateShoppingListItems.push(info)));
+
+    await result.promise;
+  } finally {
+    result.event.unsubscribeAll();
+  }
+
+  return stapleTemplateShoppingListItems;
 };
 
 const start = async () => {
   const allTags = await loadAllTags();
+  const allStapleTemplateShoppingListItems = await loadAllStapleTemplateShoppingList();
 
   fs
     .createReadStream(options.csvFilePath)
@@ -39,12 +64,21 @@ const start = async () => {
       const tags = row.skip(1).toSet();
 
       if (tags.filterNot(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0)).isEmpty()) {
-        await StapleTemplateShoppingListService.create(
-          Map({
-            description,
-            tagIds: tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id')),
-          }),
-        );
+        const foundItem = allStapleTemplateShoppingListItems.find(_ => _.get('description').localeCompare(description) === 0);
+
+        if (foundItem) {
+          await StapleTemplateShoppingListService.update(
+            foundItem.set('tagIds', tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id'))),
+          );
+        } else {
+          await StapleTemplateShoppingListService.create(
+            Map({
+              description,
+              tagIds: tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id')),
+            }),
+          );
+        }
+
         next();
       } else {
         console.log(`Provided tags not found: ${row.skip(1).toJS()}`);
