@@ -75,18 +75,18 @@ const start = async () => {
             const description = row.first();
             const tags = row.skip(1).toSet();
 
-            if (tags.filterNot(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0)).isEmpty()) {
+            if (tags.filterNot(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0)).isEmpty()) {
               const foundItem = allStapleTemplateShoppingListItems.find(_ => _.get('description').localeCompare(description) === 0);
 
               if (foundItem) {
                 await StapleTemplateShoppingListService.update(
-                  foundItem.set('tagIds', tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id'))),
+                  foundItem.set('tagIds', tags.map(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0).get('id'))),
                 );
               } else {
                 await StapleTemplateShoppingListService.create(
                   Map({
                     description,
-                    tagIds: tags.map(_ => allTags.find(tag => tag.get('name').localeCompare(_) === 0).get('id')),
+                    tagIds: tags.map(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0).get('id')),
                   }),
                 );
               }
