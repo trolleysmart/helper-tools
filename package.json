@@ -1,11 +1,11 @@
 {
-  "name": "import-staple-shopping-list",
+  "name": "smart-grocery-helper-tools",
   "version": "0.1.0",
-  "description": "Import Staple Shopping List",
+  "description": "Smart Grocery Helper Tools",
   "main": "src/index.js",
   "scripts": {
-    "start": "babel-node src/index.js",
-    "start:watch": "nodemon --exec npm start",
+    "start-import-staple-shopping-list": "babel-node src/ImportStapleShoppingList.js",
+    "start-import-staple-shopping-list:watch": "nodemon --exec npm start-import-staple-shopping-list",
     "lint": "eslint --ext .jsx --ext .js src",
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
     "test": "jest",
