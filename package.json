@@ -4,8 +4,8 @@
   "description": "Smart Grocery Helper Tools",
   "main": "src/index.js",
   "scripts": {
-    "start-import-staple-shopping-list": "babel-node src/ImportStapleShoppingList.js",
-    "start-import-staple-shopping-list:watch": "nodemon --exec npm start-import-staple-shopping-list",
+    "import-staple-template-shopping-list": "babel-node src/ImportStapleTemplateShoppingList.js",
+    "clone-staple-template-shopping-list": "babel-node src/CloneStapleTemplateShoppingList.js",
     "lint": "eslint --ext .jsx --ext .js src",
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
     "test": "jest",
@@ -39,7 +39,6 @@
     "flow-bin": "^0.47.0",
     "jest": "^20.0.4",
     "lint-staged": "^3.6.0",
-    "nodemon": "^1.11.0",
     "prettier": "^1.4.1",
     "uuid": "^3.0.1"
   },
