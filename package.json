@@ -22,8 +22,8 @@
     "command-line-args": "^4.0.6",
     "csv-parse": "^1.2.0",
     "immutable": "^3.8.1",
-    "parse": "^1.9.2",
-    "smart-grocery-parse-server-common": "^0.1.132"
+    "parse": "^1.10.0",
+    "smart-grocery-parse-server-common": "^0.1.158"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -36,11 +36,11 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
     "eslint-plugin-react": "^7.1.0",
-    "flow-bin": "^0.48.0",
+    "flow-bin": "^0.49.1",
     "jest": "^20.0.4",
-    "lint-staged": "^3.6.1",
-    "prettier": "^1.4.4",
-    "uuid": "^3.0.1"
+    "lint-staged": "^4.0.0",
+    "prettier": "^1.5.2",
+    "uuid": "^3.1.0"
   },
   "jest": {
     "rootDir": "./src"

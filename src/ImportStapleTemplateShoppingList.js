@@ -72,11 +72,11 @@ const start = async () => {
         Promise.all(
           rowChunck.map(async (rawRow) => {
             const row = Immutable.fromJS(rawRow);
-            const description = row.first();
+            const name = row.first();
             const tags = row.skip(1).toSet();
 
             if (tags.filterNot(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0)).isEmpty()) {
-              const foundItem = allStapleTemplateShoppingListItems.find(_ => _.get('description').localeCompare(description) === 0);
+              const foundItem = allStapleTemplateShoppingListItems.find(_ => _.get('name').localeCompare(name) === 0);
 
               if (foundItem) {
                 await StapleTemplateShoppingListService.update(
@@ -85,7 +85,7 @@ const start = async () => {
               } else {
                 await StapleTemplateShoppingListService.create(
                   Map({
-                    description,
+                    name,
                     tagIds: tags.map(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0).get('id')),
                   }),
                 );
