@@ -23,7 +23,7 @@
     "csv-parse": "^1.2.0",
     "immutable": "^3.8.1",
     "parse": "^1.10.0",
-    "smart-grocery-parse-server-common": "^0.1.158"
+    "smart-grocery-parse-server-common": "^0.1.159"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
