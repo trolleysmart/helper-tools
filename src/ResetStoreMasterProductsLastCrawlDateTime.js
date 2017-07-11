@@ -41,7 +41,7 @@ const start = async () => {
   const products = await loadAllStoreMasterProducts();
   const splittedItems = splitIntoChunks(products, 100);
   await BluebirdPromise.each(splittedItems.toArray(), productChunk =>
-    Promise.all(productChunk.map(product => StoreMasterProductService.update(product.set('lastCrawlDateTime', new Date(1970, 1, 1))).toArray())),
+    Promise.all(productChunk.map(product => StoreMasterProductService.update(product.set('lastCrawlDateTime', new Date(1970, 1, 1)))).toArray()),
   );
 
   console.log('Reset last crawl date/time done.');
