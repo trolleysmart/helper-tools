@@ -6,6 +6,7 @@
   "scripts": {
     "import-staple-template-shopping-list": "babel-node src/ImportStapleTemplateShoppingList.js",
     "clone-staple-template-shopping-list": "babel-node src/CloneStapleTemplateShoppingList.js",
+    "reset-store-master-product-last-crawl-datetime": "babel-node src/ResetStoreMasterProductsLastCrawlDateTime.js",
     "lint": "eslint --ext .jsx --ext .js src",
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
     "test": "jest",
