@@ -18,7 +18,11 @@ Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://loca
 
 const loadAllStoreMasterProducts = async () => {
   let products = List();
-  const result = await StoreMasterProductService.searchAll(Map({}));
+  const result = await StoreMasterProductService.searchAll(
+    Map({
+      with_masterProduct: true,
+    }),
+  );
 
   try {
     result.event.subscribe(info => (products = products.push(info)));
