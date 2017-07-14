@@ -24,7 +24,7 @@
     "csv-parse": "^1.2.0",
     "immutable": "^3.8.1",
     "parse": "^1.10.0",
-    "smart-grocery-parse-server-common": "^0.1.179"
+    "smart-grocery-parse-server-common": "^0.1.181"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -37,7 +37,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
     "eslint-plugin-react": "^7.1.0",
-    "flow-bin": "^0.49.1",
+    "flow-bin": "^0.50.0",
     "jest": "^20.0.4",
     "lint-staged": "^4.0.1",
     "prettier": "^1.5.2",
