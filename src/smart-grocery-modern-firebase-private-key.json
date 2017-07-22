@@ -1,0 +1,12 @@
+{
+  "type": "service_account",
+  "project_id": "smart-grocery-modern",
+  "private_key_id": "5e27302356f57ad2422a40b56f8ed13f22c12ac2",
+  "private_key": "-----BEGIN PRIVATE KEY-----\nMIIEvQIBADANBgkqhkiG9w0BAQEFAASCBKcwggSjAgEAAoIBAQC0E1eOpj8V8Nio\n3fKGA+YR8zKTdZ4al71whv6fgM1/v6b5sfkFVdTjCixKjfXGhrZ0i2mK4BBCLCmv\n6nKQWHl/oiIVLhTgvvJVloW0Kfovr9U8/771xPLMHjBr8CXYvEmBxvAblX+q/vCQ\n/5nZw9CNa/v8coZpqWPaAWqQoaq+3XbJSkwdGze7NBlM+Jar2zTW7jQs1XjWdsL2\nm3T6MhPn021fWT0sWDoW1S8X27m0I58un0qW4BDRalTnMYOl6xJYE0Syp9KgP17+\nHBdWegmxA4RsYBZ2Po2PXUcHEo4wDle31gnNvjL79ImtmgddXeUBUSa4an176rYj\nPy20k7YbAgMBAAECggEACg0SVAn/d3AMB9DrmoNZMiNK7WQhQQa7Mi62w5xi3ACM\nh19hsOSLj2if9EFcOIqIYJTvfSrofWkNop4JavklPvSDxn7d93Vw/Un7iITXTBYa\nZt83f2xQyQfeWAf9dM19pNq/yCpeB+NW9iDuK3N8jog6dmrGCdvEkQSHOC9t4l1O\nLTfQEcI+HP45CPI8OOSBhss3EDoCvQA+HKPVEjgYrbI1GJy+t/yeXVe+M32L1im8\no5uScspGbuYwaAdtvDzDRt0kweI744ovV/YgLfMXoE6L/eP7B5FKGv0W1s08IkGO\nhodM+tgNbGO5uI+F0zkt2CAcgzOYfzESLdpkiy26wQKBgQDaYL0vcdBiFuYoe2ZU\npWutuDAeRZoXIf8uXd5+y8Cxldt1aPpVWF8hhK3iVdBnqQrODh04wiJhpbAa8bVI\n289hZoX/qaGF/K3bFpocFPJ8c4u4JQ/rbgI5sXa2quSUSIzpnRDBk8bnhk8hSuV5\nDhceoU0xMOSb8DvzC14nF0JACwKBgQDTGVSdeArg5IagHZ/klo0IFDFts6Yb7jR1\nUnp/WH3HQEVQpOvCZ9Mj6TSg7pJLw+IsbnR9KRcteqAZ5CQRGkZGdGRJKZFNfpym\nmx9vSJQtrz/KSdWh5VyK/pHBfwa4S5qRyk05hQ5e4lH6xW9ilnMR3bWIZy7XsV00\nisCGkxTcMQKBgD5k54j3xudPzaEBaQKEZRi0iKMNlfJIF2YDEgA+bScQPyzzuprJ\n7hxgkWIazLnhdaHcLIM8DKDDu2ZnazmO/FjC90RODkV/JZl0gsHFRmdCiEgr5rmI\nrAAZ8WZNu5OWixRweQomE+2w1UkY4inNWdO5mJmWc6sOX8KYm+UlYxtzAoGBAICe\nz3J+oMo0E17djf2eSWHhw9gefJhKBAZz8ZVD2qcbnuArDEbQMdKQlfN0SQkG2fjO\neAWGksuwCnqcCemtw6HL6wq03AaGnXXZ0EZix34qaEidwh+5ezBpOW/XMMX7srsf\nsvvX+VCQvvh3cY11M7lwB9qLW/wp4itQW0vjs/MRAoGARA75goCAHlKL+k3Vmv01\n8Q9IQeyA669uCiCKtXCgZx3Hq6o3n9tFL1lsgXaT3OWICMxcv8Zqkj0A36QiZoxU\nlKETwvwHRfy8aTru7pdFrqzOW0Jgp6/3Jbxdr4HSfJ1xdm9240fTLJJUDPdeqgHL\nOwLZJNEegbsEsIIHdKp9uzc=\n-----END PRIVATE KEY-----\n",
+  "client_email": "firebase-adminsdk-lt2d1@smart-grocery-modern.iam.gserviceaccount.com",
+  "client_id": "101232750711785500950",
+  "auth_uri": "https://accounts.google.com/o/oauth2/auth",
+  "token_uri": "https://accounts.google.com/o/oauth2/token",
+  "auth_provider_x509_cert_url": "https://www.googleapis.com/oauth2/v1/certs",
+  "client_x509_cert_url": "https://www.googleapis.com/robot/v1/metadata/x509/firebase-adminsdk-lt2d1%40smart-grocery-modern.iam.gserviceaccount.com"
+}
