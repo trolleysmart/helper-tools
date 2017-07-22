@@ -23,9 +23,9 @@ const options = commandLineArgs(optionDefinitions);
 Parse.initialize(options.applicationId ? options.applicationId : 'app_id', options.javaScriptKey ? options.javaScriptKey : 'javascript_key');
 Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
 
-const loadAllMasterProduct = async (sessionToken) => {
+const loadAllMasterProductWithoutImageUrl = async (sessionToken) => {
   let masterProducts = List();
-  const result = await MasterProductService.searchAll(Map({}), sessionToken);
+  const result = await MasterProductService.searchAll(Map({ conditions: Map({ without_imageUrl: true }) }), sessionToken);
 
   try {
     result.event.subscribe(info => (masterProducts = masterProducts.push(info)));
@@ -71,7 +71,7 @@ const updateMasterProductImageUrl = async (sessionToken, masterProduct, bucket, 
 const start = async () => {
   const user = await ParseWrapperService.logIn(process.env.CRAWLER_USERNAME, process.env.CRAWLER_PASSWORD);
   const sessionToken = user.getSessionToken();
-  const masterProducts = await loadAllMasterProduct(sessionToken);
+  const masterProducts = await loadAllMasterProductWithoutImageUrl(sessionToken);
   const keyFilename = path.resolve(__dirname, 'smart-grocery-modern-firebase-private-key.json');
   const projectId = 'smart-grocery-modern';
   const bucketName = `${projectId}.appspot.com`;
@@ -79,6 +79,7 @@ const start = async () => {
   const bucket = gcs.bucket(bucketName);
 
   await BluebirdPromise.each(masterProducts.toArray(), masterProduct => updateMasterProductImageUrl(sessionToken, masterProduct, bucket, bucketName));
+  await ParseWrapperService.logOut();
 };
 
 start();

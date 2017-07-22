@@ -29,7 +29,7 @@
     "parse": "^1.10.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "smart-grocery-parse-server-common": "^0.1.193"
+    "smart-grocery-parse-server-common": "^0.1.194"
   },
   "devDependencies": {
     "babel-cli": "^6.24.1",
@@ -42,7 +42,7 @@
     "eslint-plugin-import": "^2.3.0",
     "eslint-plugin-jsx-a11y": "5.0.3",
     "eslint-plugin-react": "^7.1.0",
-    "flow-bin": "^0.50.0",
+    "flow-bin": "^0.51.0",
     "jest": "^20.0.4",
     "lint-staged": "^4.0.2",
     "prettier": "^1.5.3",
