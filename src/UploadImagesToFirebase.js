@@ -42,6 +42,11 @@ let uploadedFiles = Map();
 
 const updateMasterProductImageUrl = async (sessionToken, masterProduct, bucket, bucketName) => {
   const imageUrl = masterProduct.get('importedImageUrl');
+
+  if (imageUrl.indexOf('default.CD.png') !== -1) {
+    return;
+  }
+
   const fileContent = await requestPromise(imageUrl, { encoding: null });
   const filename = `${imageUrl.substring('https://shop.countdown.co.nz/'.length).replace(/\//g, '-').toLowerCase()}`;
   const downloadPath = `/home/morteza/tmp/${filename}`;
