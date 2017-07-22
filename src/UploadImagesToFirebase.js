@@ -44,6 +44,23 @@ const updateMasterProductImageUrl = async (sessionToken, masterProduct, bucket, 
   const imageUrl = masterProduct.get('importedImageUrl');
 
   if (imageUrl.indexOf('default.CD.png') !== -1) {
+    const filename = 'coming-soon.jpg';
+    const downloadPath = `/home/morteza/tmp/${filename}`;
+    const uploadFilePath = `MasterProducts/${filename}`;
+    const publicFileUrl = `http://storage.googleapis.com/${bucketName}/${encodeURIComponent(uploadFilePath)}`;
+
+    if (!uploadedFiles.has(publicFileUrl)) {
+      const fileMime = mime.lookup(downloadPath);
+
+      await bucket.upload(downloadPath, { destination: uploadFilePath, public: true, metadata: { contentType: fileMime } });
+
+      uploadedFiles = uploadedFiles.set(publicFileUrl, true);
+    }
+
+    await MasterProductService.update(masterProduct.set('imageUrl', publicFileUrl), sessionToken);
+
+    console.log(`Finished updating: ${masterProduct.get('name')}`);
+
     return;
   }
 
@@ -79,7 +96,6 @@ const start = async () => {
   const bucket = gcs.bucket(bucketName);
 
   await BluebirdPromise.each(masterProducts.toArray(), masterProduct => updateMasterProductImageUrl(sessionToken, masterProduct, bucket, bucketName));
-  await ParseWrapperService.logOut();
 };
 
 start();
