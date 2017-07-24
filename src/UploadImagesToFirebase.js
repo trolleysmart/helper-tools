@@ -68,7 +68,7 @@ const updateMasterProductImageUrl = async (sessionToken, masterProduct, bucket, 
   const filename = `${imageUrl.substring('https://shop.countdown.co.nz/'.length).replace(/\//g, '-').toLowerCase()}`;
   const downloadPath = `/home/morteza/tmp/${filename}`;
   const uploadFilePath = `MasterProducts/${filename}`;
-  const publicFileUrl = `http://storage.googleapis.com/${bucketName}/${encodeURIComponent(uploadFilePath)}`;
+  const publicFileUrl = `https://storage.googleapis.com/${bucketName}/${encodeURIComponent(uploadFilePath)}`;
 
   if (!uploadedFiles.has(publicFileUrl)) {
     await fse.outputFile(downloadPath, fileContent);
