@@ -28,7 +28,9 @@ const loadAllMasterProductWithoutImageUrl = async (sessionToken) => {
   const result = await MasterProductService.searchAll(Map({ conditions: Map({ without_imageUrl: true }) }), sessionToken);
 
   try {
-    result.event.subscribe(info => (masterProducts = masterProducts.push(info)));
+    result.event.subscribe((info) => {
+      masterProducts = masterProducts.push(info);
+    });
 
     await result.promise;
   } finally {

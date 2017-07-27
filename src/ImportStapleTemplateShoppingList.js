@@ -26,7 +26,9 @@ const loadAllTags = async () => {
   const result = await TagService.searchAll(Map({}));
 
   try {
-    result.event.subscribe(info => (tags = tags.push(info)));
+    result.event.subscribe((info) => {
+      tags = tags.push(info);
+    });
 
     await result.promise;
   } finally {
@@ -41,7 +43,9 @@ const loadAllStapleTemplateShoppingList = async () => {
   const result = await StapleTemplateShoppingListService.searchAll(Map({}));
 
   try {
-    result.event.subscribe(info => (stapleTemplateShoppingListItems = stapleTemplateShoppingListItems.push(info)));
+    result.event.subscribe((info) => {
+      stapleTemplateShoppingListItems = stapleTemplateShoppingListItems.push(info);
+    });
 
     await result.promise;
   } finally {
