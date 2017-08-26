@@ -1,12 +1,16 @@
 // @flow
 
 import BluebirdPromise from 'bluebird';
-import Immutable, { List, Map, Range } from 'immutable';
+import Immutable, { List, Map } from 'immutable';
 import commandLineArgs from 'command-line-args';
 import fs from 'fs';
 import csvParser from 'csv-parse';
 import Parse from 'parse/node';
-import { StapleTemplateShoppingListService, TagService } from 'smart-grocery-parse-server-common';
+import { ImmutableEx } from 'micro-business-common-javascript';
+import { StapleTemplateItemService, TagService } from 'trolley-smart-parse-server-common';
+
+const tagService = new TagService();
+const stapleTemplateItemService = new StapleTemplateItemService();
 
 const optionDefinitions = [
   { name: 'csvFilePath', type: String },
@@ -23,7 +27,7 @@ Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://loca
 
 const loadAllTags = async () => {
   let tags = List();
-  const result = await TagService.searchAll(Map({}));
+  const result = await tagService.searchAll(Map({}));
 
   try {
     result.event.subscribe((info) => {
@@ -38,13 +42,13 @@ const loadAllTags = async () => {
   return tags;
 };
 
-const loadAllStapleTemplateShoppingList = async () => {
-  let stapleTemplateShoppingListItems = List();
-  const result = await StapleTemplateShoppingListService.searchAll(Map({}));
+const loadAllStapleTemplateItems = async () => {
+  let stapleTemplateItems = List();
+  const result = await stapleTemplateItemService.searchAll(Map({}));
 
   try {
     result.event.subscribe((info) => {
-      stapleTemplateShoppingListItems = stapleTemplateShoppingListItems.push(info);
+      stapleTemplateItems = stapleTemplateItems.push(info);
     });
 
     await result.promise;
@@ -52,14 +56,12 @@ const loadAllStapleTemplateShoppingList = async () => {
     result.event.unsubscribeAll();
   }
 
-  return stapleTemplateShoppingListItems;
+  return stapleTemplateItems;
 };
-
-const splitIntoChunks = (list, chunkSize) => Range(0, list.count(), chunkSize).map(chunkStart => list.slice(chunkStart, chunkStart + chunkSize));
 
 const start = async () => {
   const allTags = await loadAllTags();
-  const allStapleTemplateShoppingListItems = await loadAllStapleTemplateShoppingList();
+  const allStapleTemplateItems = await loadAllStapleTemplateItems();
 
   const parser = csvParser(
     { delimiter: options.delimiter ? options.delimiter : ',', trim: true, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' },
@@ -70,32 +72,36 @@ const start = async () => {
         return;
       }
 
-      const splittedRows = splitIntoChunks(Immutable.fromJS(data), 100);
+      const splittedRows = ImmutableEx.splitIntoChunks(Immutable.fromJS(data).skip(1), 100); // Skipping the first item as it is the CSV header
 
       await BluebirdPromise.each(splittedRows.toArray(), rowChunck =>
         Promise.all(
           rowChunck.map(async (rawRow) => {
             const row = Immutable.fromJS(rawRow);
             const name = row.first();
-            const tags = row.skip(1).toSet();
+            const popular = row.skip(1).first();
+            const tags = Immutable.fromJS(row.skip(2).first().split('|')).toSet();
 
             if (tags.filterNot(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0)).isEmpty()) {
-              const foundItem = allStapleTemplateShoppingListItems.find(_ => _.get('name').localeCompare(name) === 0);
+              const foundItem = allStapleTemplateItems.find(_ => _.get('name').localeCompare(name) === 0);
 
               if (foundItem) {
-                await StapleTemplateShoppingListService.update(
-                  foundItem.set('tagIds', tags.map(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0).get('id'))),
+                await stapleTemplateItemService.update(
+                  foundItem
+                    .set('tagIds', tags.map(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0).get('id')))
+                    .set('popular', !!(popular && popular.trim())),
                 );
               } else {
-                await StapleTemplateShoppingListService.create(
+                await stapleTemplateItemService.create(
                   Map({
                     name,
                     tagIds: tags.map(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0).get('id')),
+                    popular: !!(popular && popular.trim()),
                   }),
                 );
               }
             } else {
-              console.log(`Provided tags not found: ${row.skip(1).toJS()}`);
+              console.log(`Provided tags not found: ${tags.toJS()}`);
             }
           }),
         ),
