@@ -37,30 +37,7 @@ const loadAllStapleTemplateItems = async () => {
   return stapleTemplateItems;
 };
 
-const loadAllStapleItems = async (userId) => {
-  let stapleItems = List();
-  const result = await stapleItemService.searchAll(Map({ conditions: Map({ userId }) }));
-
-  try {
-    result.event.subscribe((info) => {
-      stapleItems = stapleItems.push(info);
-    });
-
-    await result.promise;
-  } finally {
-    result.event.unsubscribeAll();
-  }
-
-  return stapleItems;
-};
-
 const cloneStapleTemplateItems = async (stapleTemplateItems, userId) => {
-  const stapleItems = await loadAllStapleItems(userId);
-
-  if (!stapleItems.isEmpty()) {
-    await Promise.all(stapleItems.map(stapleItem => stapleItemService.delete(stapleItem.get('id'))).toArray());
-  }
-
   const acl = ParseWrapperService.createACL(await UserService.getUserById(userId));
 
   await Promise.all(
@@ -75,7 +52,7 @@ const cloneStapleTemplateItems = async (stapleTemplateItems, userId) => {
 const start = async () => {
   const userIds = Immutable.fromJS(options.userIds.trim().split(','))
     .map(userId => userId.trim())
-    .filterNot(userId => userId);
+    .filter(userId => userId);
 
   if (!userIds.isEmpty()) {
     const stapleTemplateItems = await loadAllStapleTemplateItems();
