@@ -1,10 +1,11 @@
 {
   "name": "trolley-smart-helper-tools",
-  "version": "1.0.0-alpha.3",
+  "version": "1.0.0-alpha.4",
   "description": "Trolley Smart Helper Tools",
   "main": "src/index.js",
   "scripts": {
     "import-staple-template-items": "babel-node src/ImportStapleTemplateItems.js",
+    "clone-staple-items": "babel-node src/CloneStapleItems.js",
     "lint": "eslint --ext .jsx --ext .js src",
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
     "test": "jest",
