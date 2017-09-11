@@ -1,6 +1,6 @@
 {
   "name": "trolley-smart-helper-tools",
-  "version": "1.0.0-alpha.5",
+  "version": "1.0.0-alpha.6",
   "description": "Trolley Smart Helper Tools",
   "main": "src/index.js",
   "scripts": {
@@ -30,7 +30,7 @@
     "parse": "^1.10.0",
     "request": "^2.81.0",
     "request-promise": "^4.2.1",
-    "trolley-smart-parse-server-common": "^1.0.0-alpha.11"
+    "trolley-smart-parse-server-common": "^1.0.0-alpha.12"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
