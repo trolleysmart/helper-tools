@@ -25,7 +25,7 @@ const options = commandLineArgs(optionDefinitions);
 Parse.initialize(options.applicationId ? options.applicationId : 'app_id', options.javaScriptKey ? options.javaScriptKey : 'javascript_key');
 Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
 
-const loadAllTags = async () => {
+const loadTags = async () => {
   let tags = List();
   const result = await tagService.searchAll(Map({}));
 
@@ -42,7 +42,7 @@ const loadAllTags = async () => {
   return tags;
 };
 
-const loadAllStapleTemplateItems = async () => {
+const loadStapleTemplateItems = async () => {
   let stapleTemplateItems = List();
   const result = await stapleTemplateItemService.searchAll(Map({}));
 
@@ -60,8 +60,8 @@ const loadAllStapleTemplateItems = async () => {
 };
 
 const start = async () => {
-  const allTags = await loadAllTags();
-  const allStapleTemplateItems = await loadAllStapleTemplateItems();
+  const allTags = await loadTags();
+  const stapleTemplateItems = await loadStapleTemplateItems();
 
   const parser = csvParser(
     { delimiter: options.delimiter ? options.delimiter : ',', trim: true, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' },
@@ -80,10 +80,15 @@ const start = async () => {
             const row = Immutable.fromJS(rawRow);
             const name = row.first();
             const popular = row.skip(1).first();
-            const tags = Immutable.fromJS(row.skip(2).first().split('|')).toSet();
+            const tags = Immutable.fromJS(
+              row
+                .skip(2)
+                .first()
+                .split('|'),
+            ).toSet();
 
             if (tags.filterNot(_ => allTags.find(tag => tag.get('key').localeCompare(_) === 0)).isEmpty()) {
-              const foundItem = allStapleTemplateItems.find(_ => _.get('name').localeCompare(name) === 0);
+              const foundItem = stapleTemplateItems.find(_ => _.get('name').localeCompare(name) === 0);
 
               if (foundItem) {
                 await stapleTemplateItemService.update(

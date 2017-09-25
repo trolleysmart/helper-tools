@@ -20,7 +20,7 @@ const options = commandLineArgs(optionDefinitions);
 Parse.initialize(options.applicationId ? options.applicationId : 'app_id', options.javaScriptKey ? options.javaScriptKey : 'javascript_key');
 Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
 
-const loadAllStapleTemplateItems = async () => {
+const loadStapleTemplateItems = async () => {
   let stapleTemplateItems = List();
   const result = await stapleTemplateItemService.searchAll(Map({}));
 
@@ -55,7 +55,7 @@ const start = async () => {
     .filter(userId => userId);
 
   if (!userIds.isEmpty()) {
-    const stapleTemplateItems = await loadAllStapleTemplateItems();
+    const stapleTemplateItems = await loadStapleTemplateItems();
 
     await Promise.all(userIds.map(userId => cloneStapleTemplateItems(stapleTemplateItems, userId)).toArray());
   }

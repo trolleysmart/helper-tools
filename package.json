@@ -7,6 +7,7 @@
     "clone-staple-items": "babel-node src/CloneStapleItems.js",
     "import-staple-template-items": "babel-node src/ImportStapleTemplateItems.js",
     "import-tags": "babel-node src/ImportTags.js",
+    "update-store-tags": "babel-node src/UpdateStoreTags.js",
     "lint": "eslint --ext .jsx --ext .js src",
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
     "test": "jest",
