@@ -1,33 +1,33 @@
 SSL Item,Popular Flag,Tag / Category,Synonyms / Alternate spelling,Tags,Popular Items
 Aioli,,meal-ingredients,,baby-care,Apples
-Air Freshener,,home-kitchenware,,bakery,Baked Beans
+Air Freshener,,home-kitchenware-manchester,,bakery,Baked Beans
 Allspice,,baking-cooking,,baking-cooking,Bananas
-Aluminium Foil,,home-kitchenware,"Silver Foil, Foil Wrap",biscuits-crackers,Beer
+Aluminium Foil,,home-kitchenware-manchester,"Silver Foil, Foil Wrap",biscuits-crackers,Beer
 American Mustard,,meal-ingredients,,breakfast-foods,Biscuits
 Aniseed,,baking-cooking,,canned-prepared-foods,Bread
 Apples,X,fruit-vegetables,Apple,chocolate-sweets-snacks,Butter
 Apricots,,fruit-vegetables,Apricot,cleaning-homecare,Carrots
 Avocados,,fruit-vegetables,Avocado,clothing-manchester,Cheese
-Baby Wipes,,baby-care,,deli-chilled-foods,Chicken 
-Bags,,home-kitchenware,Plastic Bags,drinks-hot-cold,Chips
+Baby Wipes,,baby-care-toys,,deli-chilled-foods,Chicken 
+Bags,,home-kitchenware-manchester,Plastic Bags,drinks-hot-cold,Chips
 Baked Beans,X,canned-prepared-foods,,frozen-foods,Chocolate
-Baking Paper,,home-kitchenware,,fruit-vegetables,Coffee
+Baking Paper,,home-kitchenware-manchester,,fruit-vegetables,Coffee
 Baking Powder,,baking-cooking,,health-wellness,Corn Flakes
-Baking Soda,,baking-cooking,,home-kitchenware,Dish Powder
+Baking Soda,,baking-cooking,,home-kitchenware-manchester,Dish Powder
 Balsamic Vinegar,,baking-cooking,Vinegar,liquor-beer-cider,Eggs
 Banana Chips,,chocolate-sweets-snacks,,liquor-wine,Fish
 Bananas,X,fruit-vegetables,Banana,meal-ingredients,Flour
 Bathroom Cleaner,,cleaning-homecare,,meat-seafood,Jam
-Batteries,,home-kitchenware,Battery,office-entertainment,Kiwi Fruit
-Beef,,meat-seafood,Meat,personal-care,Lettuce
+Batteries,,home-kitchenware-manchester,Battery,office-entertainment,Kiwi Fruit
+Beef,,meat-seafood,Meat,beauty-personal-care,Lettuce
 Beer,X,liquor-beer-cider,,pet-care,Macaroni
 Beetroot,,fruit-vegetables,,toys-party-needs,Mayonnaise
 Biscuits,X,biscuits-crackers,cookies,,Milk
 Black Beans,,meal-ingredients,,,Milo
 Black Pepper,,baking-cooking,,,Muesli
 Bleach,,cleaning-homecare,,,Nappies
-Body Milk,,personal-care,Body Lotion,,Olive Oil
-Body Soap,,personal-care,Body Wash,,Peanut Butter
+Body Milk,,beauty-personal-care,Body Lotion,,Olive Oil
+Body Soap,,beauty-personal-care,Body Wash,,Peanut Butter
 Bourbon,,liquor-beer-cider,,,Porridge
 Bran oil,,health-wellness,,,Potatoes
 Bread,X,bakery,,,Rice
@@ -51,7 +51,7 @@ Chips,X,biscuits-crackers,Potato Chips,,
 Chocolate,X,chocolate-sweets-snacks,chocolates,,
 Chocolate Chips,,baking-cooking,Chocolate Melts,,
 Cinnamon,,baking-cooking,,,
-Cling Wrap,,home-kitchenware,"Plastic Wrap, Glad Wrap",,
+Cling Wrap,,home-kitchenware-manchester,"Plastic Wrap, Glad Wrap",,
 Cloves,,baking-cooking,,,
 Coconut Cream,,canned-prepared-foods,,,
 Coconut Milk,,canned-prepared-foods,,,
@@ -59,22 +59,22 @@ Coconut Oil,,baking-cooking,,,
 Coffee,X,drinks-hot-cold,"Instant Coffee, coffee beans, coffee grounds",,
 Coffee Beans,,drinks-hot-cold,,,
 Condensed milk,,baking-cooking,Sweetened Condensed Milk,,
-Conditioner,,personal-care,Hair Conditioner,,
-Condoms,,personal-care,Joes,,
+Conditioner,,beauty-personal-care,Hair Conditioner,,
+Condoms,,beauty-personal-care,Joes,,
 Coriander,,baking-cooking,,,
 Coriander Seeds,,baking-cooking,,,
 Corn Flakes,X,breakfast-foods,,,
 Corn Flour,,baking-cooking,,,
 Corn thins,,biscuits-crackers,,,
-Cotton Buds,,personal-care,,,
+Cotton Buds,,beauty-personal-care,,,
 Cranberries ,,baking-cooking,,,
 Cream,,deli-chilled-foods,Fresh Cream,,
 Cream Cheese,,deli-chilled-foods,,,
 Cumin,,baking-cooking,Cranberry,,
 Curry Paste,,baking-cooking,,,
 Dates,,baking-cooking,,,
-Dental Floss,,personal-care,,,
-Deodorant,,personal-care,,,
+Dental Floss,,beauty-personal-care,,,
+Deodorant,,beauty-personal-care,,,
 Dessicated Coconut,,baking-cooking,,,
 Dijon Mustard,,baking-cooking,Dijonaise,,
 Dish Brush,,cleaning-homecare,Dish washing brush,,
@@ -97,7 +97,7 @@ Fish,X,meat-seafood,,,
 Fish Oil,,health-wellness,Omega,,
 Fish Sauce,,baking-cooking,,,
 Flour,X,baking-cooking,,,
-Freezer Bag,,home-kitchenware,,,
+Freezer Bag,,home-kitchenware-manchester,,,
 Frozen Blueberry,,frozen-foods,,,
 Frozen Fish Fillets,,frozen-foods,,,
 Frozen Shrimp,,frozen-foods,,,
@@ -110,8 +110,8 @@ Ginger Powder,,baking-cooking,,,
 Golden Syrup,,baking-cooking,,,
 Grape Seed Oil,,baking-cooking,,,
 Green Tea,,drinks-hot-cold,,,
-Hair Ties,,personal-care,,,
-Hand Wash Liquid,,personal-care,Liquid Soap ,,
+Hair Ties,,beauty-personal-care,,,
+Hand Wash Liquid,,beauty-personal-care,Liquid Soap ,,
 Herbs,,baking-cooking,,,
 Honey,,breakfast-foods,,,
 Hot chocolate,,drinks-hot-cold,,,
@@ -122,10 +122,10 @@ Instant Noodles,,baking-cooking,,,
 Jam,X,breakfast-foods,,,
 Jasmine Rice,,baking-cooking,,,
 Ketchup,,baking-cooking,Tomato Ketchup,,
-Kitchen Roll,,home-kitchenware,Paper Towel,,
-Kitchen Towel,,home-kitchenware,,,
+Kitchen Roll,,home-kitchenware-manchester,Paper Towel,,
+Kitchen Towel,,home-kitchenware-manchester,,,
 Kiwi Fruit,X,fruit-vegetables,,,
-Lightbulb,,home-kitchenware,"Lightbulb, Lamp",,
+Lightbulb,,home-kitchenware-manchester,"Lightbulb, Lamp",,
 Laundry Soaker,,cleaning-homecare,,,
 Lemons,,fruit-vegetables,,,
 Lentils,,baking-cooking,,,
@@ -146,13 +146,13 @@ Minced Garlic,,baking-cooking,,,
 Minced Ginger,,baking-cooking,,,
 Minced Lamb,,meat-seafood,,,
 Mixed Spice,,baking-cooking,,,
-Mouth Wash,,personal-care,,,
+Mouth Wash,,beauty-personal-care,,,
 Muesli,X,breakfast-foods,"Meusli, musli",,
 Multi Purpose Cleaner,,cleaning-homecare,Kitchen Cleaner,,
 Mushrooms,,fruit-vegetables,,,
 Mustard Sauce,,baking-cooking,,,
 Mustard Seed,,baking-cooking,,,
-Nappies,X,baby-care,"Diapers, Nappy",,
+Nappies,X,baby-care-toys,"Diapers, Nappy",,
 Nutella,,breakfast-foods,Hazelnut Spread,,
 Nutmeg,,baking-cooking,,,
 Oats,,breakfast-foods,Rolled Oats,,
@@ -185,15 +185,15 @@ Quinoa,,baking-cooking,,,
 Raisins,,baking-cooking,,,
 Rat Food,,pet-care,,,
 Raw Sugar,,baking-cooking,,,
-Razor Blades,,personal-care,,,
+Razor Blades,,beauty-personal-care,,,
 Red Bean,,baking-cooking,,,
 Red Wine,,liquor-wine,"merlot, pinot noir, cabernet",,
 Rice,X,baking-cooking,,,
 Rice Crakers,,biscuits-crackers,,,
-Rinse Aid,,home-kitchenware,,,
+Rinse Aid,,home-kitchenware-manchester,,,
 Roasted Almonds,,baking-cooking,,,
 Rosemary,,baking-cooking,,,
-Rubbish Bags,,home-kitchenware,,,
+Rubbish Bags,,home-kitchenware-manchester,,,
 Sage,,baking-cooking,,,
 Salt,X,baking-cooking,Table Salt,,
 Sea Salt,,baking-cooking,,,
@@ -201,10 +201,10 @@ Self Raising Flour,,baking-cooking,,,
 Semi Soft Butter,,deli-chilled-foods,,,
 Sesame Oil,,baking-cooking,,,
 Sesame Seeds,,baking-cooking,,,
-Shampoo,X,personal-care,,,
-Shaving Cream,,personal-care,,,
+Shampoo,X,beauty-personal-care,,,
+Shaving Cream,,beauty-personal-care,,,
 Sliced Cheese,,deli-chilled-foods,,,
-Soap,X,personal-care,,,
+Soap,X,beauty-personal-care,,,
 Soft Drink,,drinks-hot-cold,"fanta, coke, sprite, cola, 7up",,
 Sour Cream,,deli-chilled-foods,,,
 Soy Sauce,,baking-cooking,,,
@@ -218,15 +218,15 @@ Sunflower Seed,,baking-cooking,,,
 Sweet Chili Sauce,,baking-cooking,,,
 Tarragon,,baking-cooking,,,
 Tea ,X,drinks-hot-cold,Tea bags,,
-Tissue,,personal-care,,,
+Tissue,,beauty-personal-care,,,
 Tobasco,,baking-cooking,,,
 Toilet Cleaner,,cleaning-homecare,Toilet Cleaning Liquid,,
 Toilet Paper,X,cleaning-homecare,,,
 Tomato Paste,,baking-cooking,,,
 Tomato Sauce,,baking-cooking,Tomato Source,,
 Tomatoes,X,fruit-vegetables,,,
-Tooth brush,X,personal-care,,,
-Toothpaste,X,personal-care,,,
+Tooth brush,X,beauty-personal-care,,,
+Toothpaste,X,beauty-personal-care,,,
 Tumeric,,baking-cooking,Turmeric,,
 Tuna,,meat-seafood,,,
 Vanilla Extract,,baking-cooking,,,
