@@ -62,7 +62,7 @@ const start = async () => {
             const key = row.first();
 
             if (!tags.find(_ => _.get('key').localeCompare(key) === 0)) {
-              await tagService.create(Map({ key }));
+              await tagService.create(Map({ key, level: 1, forDisplay: true, name: key }));
             }
           }),
         ),
