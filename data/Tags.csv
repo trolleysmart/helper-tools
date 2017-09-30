@@ -1,34 +1,33 @@
-key
-auto-diy
-baby-care-toys
-bakery
-baking-cooking
-beauty-personal-care
-biscuits-crackers
-books-music-movies
-breakfast-foods
-canned-prepared-foods
-chocolate-sweets-snacks
-cleaning-homecare
-clothing-shoes-bags
-deli-chilled-foods
-drinks-hot-cold
-electronics-gaming-giftcards
-frozen-foods
-fruit-vegetables
-garden
-health-wellness
-home-appliances
-home-bathroom
-home-furniture
-home-kitchenware-manchester
-jewellery
-liquor-beer-cider
-liquor-wine
-meal-ingredients
-meat-seafood
-office-craft
-pet-care
-sports-outdoors
-toys-party
-
+key,FriendlyName,Types,Types Master List,Type Friendly name
+auto-diy,Auto DIY,,,
+baby-care-toys,Baby Care Toys,grocery|toys,grocery,Groceries
+bakery,Bakery,grocery,health,Health & Wellness
+baking-cooking,Baking Cooking,grocery,electronic-goods,Electronic Goods
+beauty-personal-care,Beauty Personal Care,grocery,whiteware,Whiteware
+biscuits-crackers,Biscuits Crackers,grocery,meat,Meat
+books-music-movies,Books Music Movies,grocery,fruit-vege,Fruit & Vege
+breakfast-foods,Breakfast Foods,grocery,office,Office
+canned-prepared-foods,Canned Prepared Foods,grocery,jewellery,Jewellery
+chocolate-sweets-snacks,Chocolates Sweets Snacks,grocery,furniture,Furniture
+cleaning-homecare,Cleaning Home Care,grocery,toys,Toys & Hobbies
+clothing-shoes-bags,Clothing Shoes Bags,grocery,pet-care,Pet Care
+deli-chilled-foods,Deli Chilled Foods,grocery,garden,Garden
+drinks-hot-cold,Drinks Hot Cold,grocery,,
+electronics-gaming-giftcards,Electronic Gaming Giftcards,grocery,,
+frozen-foods,Frozen Foods,grocery,,
+fruit-vegetables,Fruit Vegetables,grocery|fruit-vege,,
+garden,Garden,grocery|garden,,
+health-wellness,Health Wellness,grocery|health,,
+home-appliances,Home Applicances,electronic-goods,,
+home-bathroom,Home Bathroom,furniture,,
+home-furniture,Home Furniture,furniture,,
+home-kitchenware-manchester,Home Kitchenware Manchester,grocery,,
+jewellery,Jewellery,grocery|jewellery,,
+liquor-beer-cider,Liquor Beer Cider,grocery,,
+liquor-wine,Liquor Wine,grocery,,
+meal-ingredients,Meal Ingredients,grocery,,
+meat-seafood,Meat Seafood,grocery|meat,,
+office-craft,Office Craft,grocery|office,,
+pet-care,Pet Care,grocery|pet-care,,
+sports-outdoors,Sports Outdoors,grocery,,
+toys-party,Toys Party,grocery|toys,,

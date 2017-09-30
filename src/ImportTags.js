@@ -65,9 +65,13 @@ const start = async () => {
           rowChunck.map(async (rawRow) => {
             const row = Immutable.fromJS(rawRow);
             const key = row.first();
+            const name = row.skip(1).first();
+            const tag = tags.find(_ => _.get('key').localeCompare(key) === 0);
 
-            if (!tags.find(_ => _.get('key').localeCompare(key) === 0)) {
-              await tagService.create(Map({ key, level: 1, forDisplay: true, name: key }));
+            if (tag) {
+              await tagService.update(tag.merge(Map({ level: 1, forDisplay: true, name })));
+            } else {
+              await tagService.create(Map({ key, level: 1, forDisplay: true, name }));
             }
           }),
         ),
