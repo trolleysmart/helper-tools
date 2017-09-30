@@ -17,11 +17,16 @@ const optionDefinitions = [
   { name: 'rowDelimiter', type: String },
   { name: 'applicationId', type: String },
   { name: 'javaScriptKey', type: String },
+  { name: 'masterKey', type: String },
   { name: 'parseServerUrl', type: String },
 ];
 const options = commandLineArgs(optionDefinitions);
 
-Parse.initialize(options.applicationId ? options.applicationId : 'app_id', options.javaScriptKey ? options.javaScriptKey : 'javascript_key');
+Parse.initialize(
+  options.applicationId ? options.applicationId : 'app_id',
+  options.javaScriptKey ? options.javaScriptKey : 'javascript_key',
+  options.masterKey ? options.masterKey : 'master_key',
+);
 Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
 
 const loadTags = async () => {
