@@ -1,6 +1,6 @@
 {
   "name": "trolley-smart-helper-tools",
-  "version": "1.0.0-alpha.11",
+  "version": "1.0.0-alpha.12",
   "description": "Trolley Smart Helper Tools",
   "main": "src/index.js",
   "scripts": {
@@ -21,19 +21,19 @@
   "author": "Micro Business ltd<micro.business.ltd@gmail.com>",
   "homepage": "https://bitbucket.org/microbusiness/trolley-smart-helper-tools#readme",
   "dependencies": {
-    "bluebird": "^3.5.0",
+    "bluebird": "^3.5.1",
     "command-line-args": "^4.0.7",
     "csv-parse": "^1.2.3",
     "fs-extra": "^4.0.2",
-    "immutable": "^3.8.1",
-    "micro-business-common-javascript": "^1.0.0-alpha.8",
-    "micro-business-parse-server-common": "^1.0.2-alpha.29",
+    "immutable": "^4.0.0-rc.4",
+    "micro-business-common-javascript": "^1.0.0-alpha.10",
+    "micro-business-parse-server-common": "^1.0.2-alpha.30",
     "mime": "^2.0.3",
     "parse": "^1.10.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "trolley-smart-parse-server-common": "^1.0.0-alpha.20",
-    "trolley-smart-store-crawler": "^1.0.0-alpha.30"
+    "trolley-smart-parse-server-common": "^1.0.0-alpha.22",
+    "trolley-smart-store-crawler": "^1.0.0-alpha.31"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -49,7 +49,7 @@
     "flow-bin": "^0.56.0",
     "jest": "^21.2.1",
     "lint-staged": "^4.2.3",
-    "prettier": "^1.7.2",
+    "prettier": "^1.7.4",
     "uuid": "^3.1.0"
   },
   "jest": {
