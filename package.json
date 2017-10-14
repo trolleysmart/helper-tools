@@ -25,6 +25,7 @@
     "bluebird": "^3.5.1",
     "command-line-args": "^4.0.7",
     "csv-parse": "^1.2.4",
+    "csv-write-stream": "^2.0.0",
     "fs-extra": "^4.0.2",
     "immutable": "^4.0.0-rc.4",
     "micro-business-common-javascript": "^1.0.0-alpha.10",
