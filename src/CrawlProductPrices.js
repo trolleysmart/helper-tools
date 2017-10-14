@@ -1,9 +1,8 @@
 // @flow
 
 import commandLineArgs from 'command-line-args';
-import Parse from 'parse/node';
 import { CountdownWebCrawlerService, Health2000WebCrawlerService, WarehouseWebCrawlerService } from 'trolley-smart-store-crawler';
-import { ParseWrapperService } from 'micro-business-parse-server-common';
+import { initializeParse } from './Common';
 
 const optionDefinitions = [
   { name: 'applicationId', type: String },
@@ -12,13 +11,6 @@ const optionDefinitions = [
   { name: 'parseServerUrl', type: String },
 ];
 const options = commandLineArgs(optionDefinitions);
-
-Parse.initialize(
-  options.applicationId ? options.applicationId : 'app_id',
-  options.javaScriptKey ? options.javaScriptKey : 'javascript_key',
-  options.masterKey ? options.masterKey : 'master_key',
-);
-Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
 
 let countdownStoreTags;
 let health2000StoreTags;
@@ -72,17 +64,12 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async (sessionToken) => {
     .catch(() => crawlWarehouseProductsDetailsAndCurrentPrice(sessionToken));
 };
 
-const crawlPriceDetails = async (crawlerUsername, crawlerPassword) => {
-  const user = await ParseWrapperService.logIn(crawlerUsername, crawlerPassword);
-  global.parseServerSessionToken = user.getSessionToken();
+const start = async () => {
+  await initializeParse(options);
 
   crawlCountdownProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
   crawlHealth2000ProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
   crawlWarehouseProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
-};
-
-const start = async () => {
-  crawlPriceDetails(process.env.CRAWLER_USERNAME, process.env.CRAWLER_PASSWORD);
 };
 
 start();
