@@ -42,9 +42,12 @@ export const getStore = async (key) => {
   return stores.isEmpty() ? storeService.read(await storeService.create(Map({ key })), null, global.parseServerSessionToken) : stores.first();
 };
 
-export const loadStoreTags = async (storeId) => {
+export const loadStoreTags = async (storeId, { includeTag } = {}) => {
   let storeTags = List();
-  const result = await new StoreTagService().searchAll(Map({ conditions: Map({ storeId }) }), global.parseServerSessionToken);
+  const result = await new StoreTagService().searchAll(
+    Map({ include_tag: includeTag || undefined, conditions: Map({ storeId }) }),
+    global.parseServerSessionToken,
+  );
 
   try {
     result.event.subscribe((info) => {

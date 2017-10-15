@@ -3,7 +3,7 @@
 import commandLineArgs from 'command-line-args';
 import fs from 'fs';
 import csvWriter from 'csv-write-stream';
-import { initializeParse, getStore, loadCrawledStoreProducts } from './Common';
+import { initializeParse, getStore, loadCrawledStoreProducts, loadStoreTags } from './Common';
 
 const optionDefinitions = [
   { name: 'storeKey', type: String },
@@ -34,14 +34,13 @@ const start = async () => {
 
   const storeId = (await getStore(options.storeKey)).get('id');
   const crawledStoreProducts = await loadCrawledStoreProducts(storeId);
-  const tags = await loadTags();
+  const storeTags = await loadStoreTags(storeId, { includeTag: true });
   const separator = options.delimiter ? options.delimiter : '|';
   const newLineDelimiter = options.rowDelimiter ? options.rowDelimiter : '\n';
-
   const writer = csvWriter({
     separator,
     newLine: newLineDelimiter,
-    headers: ['id', 'name', 'description', 'barcode', 'size', 'productPageUrl', 'imageUrl'],
+    headers: ['id', 'name', 'description', 'barcode', 'size', 'productPageUrl', 'imageUrl', 'storeTags', 'tags'],
   });
 
   writer.pipe(fs.createWriteStream(options.csvFilePath));
@@ -63,6 +62,14 @@ const start = async () => {
       size: size.replace('\r\n', ' ').replace('\n', ' '),
       productPageUrl: productPageUrl.replace('\r\n', ' ').replace('\n', ' '),
       imageUrl: imageUrl.replace('\r\n', ' ').replace('\n', ' '),
+      storeTags: crawledStoreProduct
+        .get('storeTagIds')
+        .map(storeTagId => storeTags.find(_ => _.get('id').localeCompare(storeTagId) === 0).get('key'))
+        .join(),
+      tags: crawledStoreProduct
+        .get('storeTagIds')
+        .map(storeTagId => storeTags.find(_ => _.get('id').localeCompare(storeTagId) === 0).getIn(['tag', 'key']))
+        .join(),
     });
   });
 
