@@ -136,8 +136,8 @@ export const loadLatestCrawledProductPrice = async (storeId, crawledStoreProduct
   );
 
   if (crawledProductPrices.isEmpty()) {
-    return Maybe.None();
+    return Map({ crawledStoreProductId, crawledProductPrice: Maybe.None() });
   }
 
-  return Maybe.Some(crawledProductPrices.first());
+  return Map({ crawledStoreProductId, crawledProductPrice: Maybe.Some(crawledProductPrices.first()) });
 };
