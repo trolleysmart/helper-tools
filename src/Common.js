@@ -1,9 +1,11 @@
 // @flow
 
 import { List, Map } from 'immutable';
+import { Maybe } from 'monet';
 import Parse from 'parse/node';
 import { ParseWrapperService, UserService } from 'micro-business-parse-server-common';
 import {
+  CrawledProductPriceService,
   CrawledStoreProductService,
   StapleItemService,
   StapleTemplateItemService,
@@ -125,4 +127,17 @@ export const loadCrawledStoreProducts = async (storeId) => {
   }
 
   return crawledStoreProducts;
+};
+
+export const loadLatestCrawledProductPrice = async (storeId, crawledStoreProductId) => {
+  const crawledProductPrices = await new CrawledProductPriceService().search(
+    Map({ topMost: true, conditions: Map({ storeId, crawledStoreProductId }) }),
+    global.parseServerSessionToken,
+  );
+
+  if (crawledProductPrices.isEmpty()) {
+    return Map({ crawledStoreProductId, crawledProductPrice: Maybe.None() });
+  }
+
+  return Map({ crawledStoreProductId, crawledProductPrice: Maybe.Some(crawledProductPrices.first()) });
 };
