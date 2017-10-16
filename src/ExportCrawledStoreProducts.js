@@ -1,8 +1,11 @@
 // @flow
 
+import BluebirdPromise from 'bluebird';
 import commandLineArgs from 'command-line-args';
-import fs from 'fs';
 import csvWriter from 'csv-write-stream';
+import fs from 'fs';
+import Immutable, { List } from 'immutable';
+import { ImmutableEx } from 'micro-business-common-javascript';
 import { initializeParse, getStore, loadCrawledStoreProducts, loadLatestCrawledProductPrice, loadStoreTags } from './Common';
 
 const optionDefinitions = [
@@ -62,10 +65,17 @@ const start = async () => {
     ],
   });
 
-  const crawledProductPricesPromises = crawledStoreProducts
-    .map(crawledStoreProduct => loadLatestCrawledProductPrice(storeId, crawledStoreProduct.get('id')))
-    .toArray();
-  const crawledProductPrices = await Promise.all(crawledProductPricesPromises);
+  const splittedCrawledStoreProduct = ImmutableEx.splitIntoChunks(crawledStoreProducts, 10);
+  let crawledProductPrices = List();
+
+  await BluebirdPromise.each(
+    splittedCrawledStoreProduct
+      .map(chunck => Promise.all(chunck.map(crawledStoreProduct => loadLatestCrawledProductPrice(storeId, crawledStoreProduct.get('id'))).toArray()))
+      .toArray(),
+    (value) => {
+      crawledProductPrices = crawledProductPrices.concat(Immutable.fromJS(value));
+    },
+  );
 
   writer.pipe(fs.createWriteStream(options.csvFilePath));
   try {
