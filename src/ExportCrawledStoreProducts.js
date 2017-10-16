@@ -61,6 +61,7 @@ const start = async () => {
       'currentPrice',
       'wasPrice',
       'unitPrice',
+      'multiBuy',
     ],
   });
 
@@ -97,6 +98,11 @@ const start = async () => {
         : `${crawledProductPrice.some().getIn(['priceDetails', 'unitPrice', 'price']) || ''}, ${crawledProductPrice
           .some()
           .getIn(['priceDetails', 'unitPrice', 'size']) || ''}`;
+      const multiBuy = crawledProductPrice.isNone()
+        ? ''
+        : `${crawledProductPrice.some().getIn(['priceDetails', 'multiBuy', 'awardQuantity']) || ''}, ${crawledProductPrice
+          .some()
+          .getIn(['priceDetails', 'multiBuyInfo', 'awardValue']) || ''}`;
 
       writer.write({
         id: id.replace('\r\n', ' ').replace('\n', ' '),
@@ -123,6 +129,7 @@ const start = async () => {
         currentPrice,
         wasPrice,
         unitPrice,
+        multiBuy,
       });
     });
   });
