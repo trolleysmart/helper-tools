@@ -7,7 +7,9 @@ import { ParseWrapperService, UserService } from 'micro-business-parse-server-co
 import {
   CrawledProductPriceService,
   CrawledStoreProductService,
+  ProductPriceService,
   StapleItemService,
+  StoreProductService,
   StapleTemplateItemService,
   StoreService,
   StoreTagService,
@@ -140,4 +142,34 @@ export const loadLatestCrawledProductPrice = async (storeId, crawledStoreProduct
   }
 
   return Map({ crawledStoreProductId, crawledProductPrice: Maybe.Some(crawledProductPrices.first()) });
+};
+
+export const loadStoreProducts = async (storeId) => {
+  let storeProducts = List();
+  const result = await new StoreProductService().searchAll(Map({ conditions: Map({ storeId }) }), global.parseServerSessionToken);
+
+  try {
+    result.event.subscribe((info) => {
+      storeProducts = storeProducts.push(info);
+    });
+
+    await result.promise;
+  } finally {
+    result.event.unsubscribeAll();
+  }
+
+  return storeProducts;
+};
+
+export const loadLatestProductPrice = async (storeId, storeProductId) => {
+  const productPrices = await new ProductPriceService().search(
+    Map({ topMost: true, conditions: Map({ storeId, storeProductId }) }),
+    global.parseServerSessionToken,
+  );
+
+  if (productPrices.isEmpty()) {
+    return Map({ storeProductId, productPrice: Maybe.None() });
+  }
+
+  return Map({ storeProductId, productPrice: Maybe.Some(productPrices.first()) });
 };
