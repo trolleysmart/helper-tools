@@ -100,7 +100,7 @@ const start = async () => {
           .getIn(['priceDetails', 'unitPrice', 'size']) || ''}`;
       const multiBuy = crawledProductPrice.isNone()
         ? ''
-        : `${crawledProductPrice.some().getIn(['priceDetails', 'multiBuy', 'awardQuantity']) || ''}, ${crawledProductPrice
+        : `${crawledProductPrice.some().getIn(['priceDetails', 'multiBuyInfo', 'awardQuantity']) || ''}, ${crawledProductPrice
           .some()
           .getIn(['priceDetails', 'multiBuyInfo', 'awardValue']) || ''}`;
 
