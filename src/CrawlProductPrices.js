@@ -1,10 +1,17 @@
 // @flow
 
 import commandLineArgs from 'command-line-args';
-import { CountdownWebCrawlerService, Health2000WebCrawlerService, WarehouseWebCrawlerService } from 'trolley-smart-store-crawler';
+import {
+  CountdownWebCrawlerService,
+  Health2000WebCrawlerService,
+  TargetCrawledDataStoreType,
+  WarehouseWebCrawlerService,
+} from 'trolley-smart-store-crawler';
 import { initializeParse } from './Common';
 
 const optionDefinitions = [
+  { name: 'storeKeys', type: String },
+  { name: 'targetCrawledDataStoreType', type: String },
   { name: 'applicationId', type: String },
   { name: 'javaScriptKey', type: String },
   { name: 'masterKey', type: String },
@@ -16,60 +23,79 @@ let countdownStoreTags;
 let health2000StoreTags;
 let warehouseStoreTags;
 
-const crawlCountdownProductsDetailsAndCurrentPrice = async (sessionToken) => {
+const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
   const service = new CountdownWebCrawlerService({
     logVerboseFunc: message => console.log(message),
     logInfoFunc: message => console.log(message),
     logErrorFunc: message => console.log(message),
-    sessionToken,
+    sessionToken: global.parseServerSessionToken,
+    targetCrawledDataStoreType: !options.targetCrawledDataStoreType
+      ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
+      : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
   });
 
   countdownStoreTags = countdownStoreTags || (await service.getStoreTags());
 
   service
     .crawlProductsDetailsAndCurrentPrice(countdownStoreTags)
-    .then(() => crawlCountdownProductsDetailsAndCurrentPrice(sessionToken))
-    .catch(() => crawlCountdownProductsDetailsAndCurrentPrice(sessionToken));
+    .then(() => crawlCountdownProductsDetailsAndCurrentPrice())
+    .catch(() => crawlCountdownProductsDetailsAndCurrentPrice());
 };
 
-const crawlHealth2000ProductsDetailsAndCurrentPrice = async (sessionToken) => {
+const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
   const service = new Health2000WebCrawlerService({
     logVerboseFunc: message => console.log(message),
     logInfoFunc: message => console.log(message),
     logErrorFunc: message => console.log(message),
-    sessionToken,
+    sessionToken: global.parseServerSessionToken,
+    targetCrawledDataStoreType: !options.targetCrawledDataStoreType
+      ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
+      : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
   });
 
   health2000StoreTags = health2000StoreTags || (await service.getStoreTags());
 
   service
     .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
-    .then(() => crawlHealth2000ProductsDetailsAndCurrentPrice(sessionToken))
-    .catch(() => crawlHealth2000ProductsDetailsAndCurrentPrice(sessionToken));
+    .then(() => crawlHealth2000ProductsDetailsAndCurrentPrice())
+    .catch(() => crawlHealth2000ProductsDetailsAndCurrentPrice());
 };
 
-const crawlWarehouseProductsDetailsAndCurrentPrice = async (sessionToken) => {
+const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
   const service = new WarehouseWebCrawlerService({
     logVerboseFunc: message => console.log(message),
     logInfoFunc: message => console.log(message),
     logErrorFunc: message => console.log(message),
-    sessionToken,
+    sessionToken: global.parseServerSessionToken,
+    targetCrawledDataStoreType: !options.targetCrawledDataStoreType
+      ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
+      : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
   });
 
   warehouseStoreTags = warehouseStoreTags || (await service.getStoreTags());
 
   service
     .crawlProductsDetailsAndCurrentPrice(warehouseStoreTags)
-    .then(() => crawlWarehouseProductsDetailsAndCurrentPrice(sessionToken))
-    .catch(() => crawlWarehouseProductsDetailsAndCurrentPrice(sessionToken));
+    .then(() => crawlWarehouseProductsDetailsAndCurrentPrice())
+    .catch(() => crawlWarehouseProductsDetailsAndCurrentPrice());
 };
 
 const start = async () => {
   await initializeParse(options);
 
-  crawlCountdownProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
-  crawlHealth2000ProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
-  crawlWarehouseProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+  const storeKeys = (options.storeKeys || '').split(',');
+
+  if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
+    crawlCountdownProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+  }
+
+  if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
+    crawlHealth2000ProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+  }
+
+  if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
+    crawlWarehouseProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+  }
 };
 
 start();

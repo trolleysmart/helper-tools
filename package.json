@@ -1,6 +1,6 @@
 {
   "name": "trolley-smart-helper-tools",
-  "version": "1.0.0-alpha.14",
+  "version": "1.0.0-alpha.15",
   "description": "Trolley Smart Helper Tools",
   "main": "src/index.js",
   "scripts": {
@@ -36,8 +36,8 @@
     "parse": "^1.10.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "trolley-smart-parse-server-common": "^1.0.0-alpha.25",
-    "trolley-smart-store-crawler": "^1.0.0-alpha.35"
+    "trolley-smart-parse-server-common": "^1.0.0-alpha.26",
+    "trolley-smart-store-crawler": "^1.0.0-alpha.38"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -46,11 +46,11 @@
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
     "eslint": "^4.9.0",
-    "eslint-config-airbnb": "^16.0.0",
+    "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.7.0",
     "eslint-plugin-jsx-a11y": "6.0.2",
     "eslint-plugin-react": "^7.4.0",
-    "flow-bin": "^0.57.2",
+    "flow-bin": "^0.57.3",
     "jest": "^21.2.1",
     "lint-staged": "^4.2.3",
     "prettier": "^1.7.4",
