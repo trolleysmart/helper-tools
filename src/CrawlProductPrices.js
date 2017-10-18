@@ -12,6 +12,7 @@ import { initializeParse } from './Common';
 const optionDefinitions = [
   { name: 'storeKeys', type: String },
   { name: 'targetCrawledDataStoreType', type: String },
+  { name: 'concurrentCrawlingCount', type: Number },
   { name: 'applicationId', type: String },
   { name: 'javaScriptKey', type: String },
   { name: 'masterKey', type: String },
@@ -32,6 +33,7 @@ const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
     targetCrawledDataStoreType: !options.targetCrawledDataStoreType
       ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
       : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
+    concurrentCrawlingCount: options.concurrentCrawlingCount,
   });
 
   countdownStoreTags = countdownStoreTags || (await service.getStoreTags());
@@ -57,6 +59,7 @@ const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
     targetCrawledDataStoreType: !options.targetCrawledDataStoreType
       ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
       : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
+    concurrentCrawlingCount: options.concurrentCrawlingCount,
   });
 
   health2000StoreTags = health2000StoreTags || (await service.getStoreTags());
@@ -82,6 +85,7 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
     targetCrawledDataStoreType: !options.targetCrawledDataStoreType
       ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
       : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
+    concurrentCrawlingCount: options.concurrentCrawlingCount,
   });
 
   warehouseStoreTags = warehouseStoreTags || (await service.getStoreTags());
