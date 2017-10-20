@@ -4,14 +4,12 @@ import commandLineArgs from 'command-line-args';
 import {
   CountdownWebCrawlerService,
   Health2000WebCrawlerService,
-  TargetCrawledDataStoreType,
   WarehouseWebCrawlerService,
 } from 'trolley-smart-store-crawler';
 import { initializeParse } from './Common';
 
 const optionDefinitions = [
   { name: 'storeKeys', type: String },
-  { name: 'targetCrawledDataStoreType', type: String },
   { name: 'concurrentCrawlingCount', type: Number },
   { name: 'applicationId', type: String },
   { name: 'javaScriptKey', type: String },
@@ -30,9 +28,6 @@ const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
     logInfoFunc: message => console.log(message),
     logErrorFunc: message => console.log(message),
     sessionToken: global.parseServerSessionToken,
-    targetCrawledDataStoreType: !options.targetCrawledDataStoreType
-      ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
-      : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
     concurrentCrawlingCount: options.concurrentCrawlingCount,
   });
 
@@ -56,9 +51,6 @@ const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
     logInfoFunc: message => console.log(message),
     logErrorFunc: message => console.log(message),
     sessionToken: global.parseServerSessionToken,
-    targetCrawledDataStoreType: !options.targetCrawledDataStoreType
-      ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
-      : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
     concurrentCrawlingCount: options.concurrentCrawlingCount,
   });
 
@@ -82,9 +74,6 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
     logInfoFunc: message => console.log(message),
     logErrorFunc: message => console.log(message),
     sessionToken: global.parseServerSessionToken,
-    targetCrawledDataStoreType: !options.targetCrawledDataStoreType
-      ? TargetCrawledDataStoreType.CRAWLED_SPECIFIC_DESIGNED_TABLES
-      : TargetCrawledDataStoreType.STORE_PRODUCT_AND_PRODUCT_PRICE_TABLES,
     concurrentCrawlingCount: options.concurrentCrawlingCount,
   });
 

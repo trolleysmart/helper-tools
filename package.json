@@ -9,7 +9,6 @@
     "import-tags": "babel-node src/ImportTags.js",
     "update-store-tags": "babel-node src/UpdateStoreTags.js",
     "crawl-product-prices": "babel-node src/CrawlProductPrices.js",
-    "export-crawled-store-products-and-prices": "babel-node src/ExportCrawledStoreProductsAndPrices.js",
     "export-store-products-and-prices": "babel-node src/ExportStoreProductsAndPrices.js",
     "lint": "eslint --ext .jsx --ext .js src",
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
