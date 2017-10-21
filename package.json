@@ -29,14 +29,14 @@
     "fs-extra": "^4.0.2",
     "immutable": "^4.0.0-rc.4",
     "micro-business-common-javascript": "^1.0.0-alpha.10",
-    "micro-business-parse-server-common": "^1.0.2-alpha.31",
+    "micro-business-parse-server-common": "^1.0.2-alpha.32",
     "mime": "^2.0.3",
     "monet": "^0.8.10",
     "parse": "^1.10.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "trolley-smart-parse-server-common": "^1.0.0-alpha.28",
-    "trolley-smart-store-crawler": "^1.0.0-alpha.44"
+    "trolley-smart-parse-server-common": "^1.0.0-alpha.29",
+    "trolley-smart-store-crawler": "^1.0.0-alpha.45"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
