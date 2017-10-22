@@ -28,15 +28,15 @@
     "csv-write-stream": "^2.0.0",
     "fs-extra": "^4.0.2",
     "immutable": "^4.0.0-rc.4",
-    "micro-business-common-javascript": "^1.0.0-alpha.10",
-    "micro-business-parse-server-common": "^1.0.2-alpha.32",
+    "micro-business-common-javascript": "^1.0.0-alpha.11",
+    "micro-business-parse-server-common": "^1.0.2-alpha.33",
     "mime": "^2.0.3",
     "monet": "^0.8.10",
-    "parse": "^1.10.0",
+    "parse": "^1.10.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "trolley-smart-parse-server-common": "^1.0.0-alpha.29",
-    "trolley-smart-store-crawler": "^1.0.0-alpha.45"
+    "trolley-smart-parse-server-common": "^1.0.0-alpha.31",
+    "trolley-smart-store-crawler": "^1.0.0-alpha.46"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
