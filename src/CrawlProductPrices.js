@@ -1,11 +1,7 @@
 // @flow
 
 import commandLineArgs from 'command-line-args';
-import {
-  CountdownWebCrawlerService,
-  Health2000WebCrawlerService,
-  WarehouseWebCrawlerService,
-} from 'trolley-smart-store-crawler';
+import { CountdownWebCrawlerService, Health2000WebCrawlerService, WarehouseWebCrawlerService } from 'trolley-smart-store-crawler';
 import { initializeParse } from './Common';
 
 const optionDefinitions = [
@@ -35,13 +31,7 @@ const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
 
   service
     .crawlProductsDetailsAndCurrentPrice(countdownStoreTags)
-    .then((count) => {
-      if (count === 0) {
-        console.log('All products are crawled for the Countdown store.');
-      }
-
-      crawlCountdownProductsDetailsAndCurrentPrice();
-    })
+    .then(() => crawlCountdownProductsDetailsAndCurrentPrice())
     .catch(() => crawlCountdownProductsDetailsAndCurrentPrice());
 };
 
@@ -58,13 +48,7 @@ const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
 
   service
     .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
-    .then((count) => {
-      if (count === 0) {
-        console.log('All products are crawled for the Health2000 store.');
-      }
-
-      crawlHealth2000ProductsDetailsAndCurrentPrice();
-    })
+    .then(() => crawlHealth2000ProductsDetailsAndCurrentPrice())
     .catch(() => crawlHealth2000ProductsDetailsAndCurrentPrice());
 };
 
@@ -81,13 +65,7 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
 
   service
     .crawlProductsDetailsAndCurrentPrice(warehouseStoreTags)
-    .then((count) => {
-      if (count === 0) {
-        console.log('All products are crawled for the Warehouse store.');
-      }
-
-      crawlWarehouseProductsDetailsAndCurrentPrice();
-    })
+    .then(() => crawlWarehouseProductsDetailsAndCurrentPrice())
     .catch(() => crawlWarehouseProductsDetailsAndCurrentPrice());
 };
 
