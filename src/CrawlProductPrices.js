@@ -37,7 +37,7 @@ const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
     .crawlProductsDetailsAndCurrentPrice(countdownStoreTags)
     .then((count) => {
       if (count === 0) {
-        return;
+        console.log('All products are crawled for the Countdown store.');
       }
 
       crawlCountdownProductsDetailsAndCurrentPrice();
@@ -60,7 +60,7 @@ const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
     .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
     .then((count) => {
       if (count === 0) {
-        return;
+        console.log('All products are crawled for the Health2000 store.');
       }
 
       crawlHealth2000ProductsDetailsAndCurrentPrice();
@@ -83,7 +83,7 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
     .crawlProductsDetailsAndCurrentPrice(warehouseStoreTags)
     .then((count) => {
       if (count === 0) {
-        return;
+        console.log('All products are crawled for the Warehouse store.');
       }
 
       crawlWarehouseProductsDetailsAndCurrentPrice();
