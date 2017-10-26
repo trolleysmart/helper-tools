@@ -31,7 +31,13 @@ const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
 
   service
     .crawlProductsDetailsAndCurrentPrice(countdownStoreTags)
-    .then(() => crawlCountdownProductsDetailsAndCurrentPrice())
+    .then((count) => {
+      if (count === 0) {
+        return;
+      }
+
+      crawlCountdownProductsDetailsAndCurrentPrice();
+    })
     .catch(() => crawlCountdownProductsDetailsAndCurrentPrice());
 };
 
@@ -48,7 +54,13 @@ const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
 
   service
     .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
-    .then(() => crawlHealth2000ProductsDetailsAndCurrentPrice())
+    .then((count) => {
+      if (count === 0) {
+        return;
+      }
+
+      crawlHealth2000ProductsDetailsAndCurrentPrice();
+    })
     .catch(() => crawlHealth2000ProductsDetailsAndCurrentPrice());
 };
 
@@ -65,7 +77,13 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
 
   service
     .crawlProductsDetailsAndCurrentPrice(warehouseStoreTags)
-    .then(() => crawlWarehouseProductsDetailsAndCurrentPrice())
+    .then((count) => {
+      if (count === 0) {
+        return;
+      }
+
+      crawlWarehouseProductsDetailsAndCurrentPrice();
+    })
     .catch(() => crawlWarehouseProductsDetailsAndCurrentPrice());
 };
 
