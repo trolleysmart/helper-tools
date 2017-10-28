@@ -10,6 +10,7 @@
     "update-store-tags": "babel-node src/UpdateStoreTags.js",
     "crawl-product-prices": "babel-node src/CrawlProductPrices.js",
     "export-store-products-and-prices": "babel-node src/ExportStoreProductsAndPrices.js",
+    "import-product-prices": "babel-node src/ImportProductPrices.js",
     "lint": "eslint --ext .jsx --ext .js src",
     "fixlint": "eslint --fix --ext .jsx --ext .js src",
     "test": "jest",
@@ -35,7 +36,7 @@
     "parse": "^1.10.1",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "trolley-smart-parse-server-common": "^1.0.0-alpha.32",
+    "trolley-smart-parse-server-common": "^1.0.0-alpha.34",
     "trolley-smart-store-crawler": "^1.0.0-alpha.47"
   },
   "devDependencies": {
