@@ -84,7 +84,7 @@ const start = async () => {
           const storeProduct = await loadStoreProduct(storeId, false, storeProductAndPrice.get('name'));
           const tagIds = allTags
             .filter(tag => storeProductAndPrice.get('tags').find(_ => tag.get('key').localeCompare(_) === 0))
-            .map(tag => tag.get('id'));
+            .map(tag => tag.get('id')).toSet().toList();
           const storeProductDetails = Map({
             name: storeProduct.get('name'),
             description: storeProduct.get('description'),
