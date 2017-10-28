@@ -124,7 +124,7 @@ const start = async () => {
             return;
           }
 
-          const currentPrice = storeProductAndPrice.get('currentPrice') ? parseFloat(storeProductAndPrice.get('currentPrice')) : 0;
+          let currentPrice = storeProductAndPrice.get('currentPrice') ? parseFloat(storeProductAndPrice.get('currentPrice')) : 0;
           let wasPrice = storeProductAndPrice.get('wasPrice') ? parseFloat(storeProductAndPrice.get('wasPrice')) : undefined;
           let savingPercentage = storeProductAndPrice.get('savingPercentage') ? parseFloat(storeProductAndPrice.get('savingPercentage')) : 0;
           let saving = storeProductAndPrice.get('saving') ? parseFloat(storeProductAndPrice.get('saving')) : 0;
@@ -133,6 +133,10 @@ const start = async () => {
             : undefined;
           const multiBuy = storeProductAndPrice.get('multiBuy');
           const unitPrice = storeProductAndPrice.get('unitPrice');
+
+          if (!currentPrice && multiBuy.count() === 2) {
+            currentPrice = parseFloat(multiBuy.last()) / parseInt(multiBuy.first(), 10);
+          }
 
           if (wasPrice) {
             saving = wasPrice - currentPrice;
