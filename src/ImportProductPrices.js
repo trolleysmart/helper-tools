@@ -125,14 +125,29 @@ const start = async () => {
           }
 
           const currentPrice = storeProductAndPrice.get('currentPrice') ? parseFloat(storeProductAndPrice.get('currentPrice')) : 0;
-          const wasPrice = storeProductAndPrice.get('wasPrice') ? parseFloat(storeProductAndPrice.get('wasPrice')) : undefined;
-          const savingPercentage = storeProductAndPrice.get('savingPercentage') ? parseFloat(storeProductAndPrice.get('savingPercentage')) : 0;
-          const saving = storeProductAndPrice.get('saving') ? parseFloat(storeProductAndPrice.get('saving')) : 0;
+          let wasPrice = storeProductAndPrice.get('wasPrice') ? parseFloat(storeProductAndPrice.get('wasPrice')) : undefined;
+          let savingPercentage = storeProductAndPrice.get('savingPercentage') ? parseFloat(storeProductAndPrice.get('savingPercentage')) : 0;
+          let saving = storeProductAndPrice.get('saving') ? parseFloat(storeProductAndPrice.get('saving')) : 0;
           const offerEndDate = storeProductAndPrice.get('offerEndDate')
             ? moment(storeProductAndPrice.get('offerEndDate'), 'DD/MM/YYYY').toDate()
             : undefined;
           const multiBuy = storeProductAndPrice.get('multiBuy');
           const unitPrice = storeProductAndPrice.get('unitPrice');
+
+          if (wasPrice) {
+            saving = wasPrice - currentPrice;
+
+            const temp = saving * 100;
+
+            savingPercentage = temp / wasPrice;
+          } else if (saving) {
+            wasPrice = currentPrice + saving;
+
+            const temp = saving * 100;
+
+            savingPercentage = temp / wasPrice;
+          }
+
           const priceDetails = ImmutableEx.removeNullAndUndefinedProps(Map({
             specialType: storeProductAndPrice.get('specialType'),
             saving,
