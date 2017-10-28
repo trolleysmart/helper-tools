@@ -140,7 +140,6 @@ const start = async () => {
             }));
 
             if (result.get('productPrice').isNone()) {
-              console.log(JSON.stringify(priceDetails.toJS(), null, 2));
               await productPriceService.create(
                 Map({
                   name,
@@ -170,8 +169,9 @@ const start = async () => {
                 return;
               }
 
-              await productPriceService.update(
-                productPrice.merge(Map({
+              await productPriceService.update(productPrice.set('status', 'I'), global.parseServerSessionToken);
+              await productPriceService.create(
+                Map({
                   name,
                   description,
                   barcode,
@@ -187,7 +187,8 @@ const start = async () => {
                   status: 'A',
                   priceDetails,
                   createdByCrawler: false,
-                })),
+                }),
+                null,
                 global.parseServerSessionToken,
               );
             }
