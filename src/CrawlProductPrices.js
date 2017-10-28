@@ -2,7 +2,10 @@
 
 import commandLineArgs from 'command-line-args';
 import { CountdownWebCrawlerService, Health2000WebCrawlerService, WarehouseWebCrawlerService } from 'trolley-smart-store-crawler';
+import util from 'util';
 import { initializeParse } from './Common';
+
+const setTimeoutPromise = util.promisify(setTimeout);
 
 const optionDefinitions = [
   { name: 'storeKeys', type: String },
@@ -33,6 +36,8 @@ const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
     .crawlProductsDetailsAndCurrentPrice(countdownStoreTags)
     .then((count) => {
       if (count === 0) {
+        setTimeoutPromise(1000 * 60 * 30).then(() => crawlCountdownProductsDetailsAndCurrentPrice());
+
         return;
       }
 
@@ -56,6 +61,8 @@ const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
     .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
     .then((count) => {
       if (count === 0) {
+        setTimeoutPromise(1000 * 60 * 30).then(() => crawlHealth2000ProductsDetailsAndCurrentPrice());
+
         return;
       }
 
@@ -79,6 +86,8 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
     .crawlProductsDetailsAndCurrentPrice(warehouseStoreTags)
     .then((count) => {
       if (count === 0) {
+        setTimeoutPromise(1000 * 60 * 30).then(() => crawlWarehouseProductsDetailsAndCurrentPrice());
+
         return;
       }
 
