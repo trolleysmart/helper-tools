@@ -148,6 +148,7 @@ const start = async () => {
             savingPercentage = temp / wasPrice;
           }
 
+          const priceToDisplay = multiBuy.count() === 2 ? parseFloat(multiBuy.last()) / parseInt(multiBuy.first(), 10) : currentPrice;
           const priceDetails = ImmutableEx.removeNullAndUndefinedProps(Map({
             specialType: storeProductAndPrice.get('specialType'),
             saving,
@@ -155,11 +156,12 @@ const start = async () => {
             currentPrice,
             wasPrice,
             offerEndDate,
+            priceToDisplay,
             multiBuy:
                   multiBuy.count() === 2
                     ? Map({
                       awardQuantity: multiBuy.first(),
-                      awardValue: parseFloat(multiBuy.last()),
+                      awardValue: parseInt(multiBuy.last(), 10),
                     })
                     : undefined,
             unitPrice:
