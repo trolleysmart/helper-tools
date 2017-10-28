@@ -156,7 +156,6 @@ const start = async () => {
             currentPrice,
             wasPrice,
             offerEndDate,
-            priceToDisplay,
             multiBuy:
                   multiBuy.count() === 2
                     ? Map({
@@ -184,6 +183,7 @@ const start = async () => {
             tagIds: storeProduct.get('tagIds'),
             status: 'A',
             special: storeProductAndPrice.get('specialType') ? storeProductAndPrice.get('specialType').localeCompare('none') === 0 : false,
+            priceToDisplay,
             priceDetails,
             saving,
             savingPercentage,
@@ -198,7 +198,7 @@ const start = async () => {
 
             if (!notMatchedProductPrices.isEmpty()) {
               await Promise.all(notMatchedProductPrices
-                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), this.sessionToken))
+                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), global.parseServerSessionToken))
                 .toArray());
             }
 
@@ -208,10 +208,10 @@ const start = async () => {
             if (matchedProductPrices.count() > 1) {
               await Promise.all(matchedProductPrices
                 .skip(1)
-                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), this.sessionToken))
+                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), global.parseServerSessionToken))
                 .toArray());
             } else if (matchedProductPrices.count() === 0) {
-              await productPriceService.create(productPrice.set('createdByCrawler', false), null, this.sessionToken);
+              await productPriceService.create(productPrice.set('createdByCrawler', false), null, global.parseServerSessionToken);
             }
           }
         })));
