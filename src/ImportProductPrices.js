@@ -84,7 +84,9 @@ const start = async () => {
           const storeProduct = await loadStoreProduct(storeId, false, storeProductAndPrice.get('name'));
           const tagIds = allTags
             .filter(tag => storeProductAndPrice.get('tags').find(_ => tag.get('key').localeCompare(_) === 0))
-            .map(tag => tag.get('id')).toSet().toList();
+            .map(tag => tag.get('id'))
+            .toSet()
+            .toList();
           const storeProductDetails = Map({
             name: storeProduct.get('name'),
             description: storeProduct.get('description'),
@@ -113,9 +115,11 @@ const start = async () => {
           const storeProductAndPrice = storeProductsAndPrices.find(_ => _.get('name').localeCompare(storeProduct.get('name')) === 0);
 
           if (!storeProductAndPrice) {
-            await Promise.all(productPrices
-              .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), global.parseServerSessionToken))
-              .toArray());
+            if (!productPrices.isEmpty()) {
+              await Promise.all(productPrices
+                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), global.parseServerSessionToken))
+                .toArray());
+            }
 
             return;
           }
