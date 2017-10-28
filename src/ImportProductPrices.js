@@ -63,7 +63,10 @@ const start = async () => {
           const wasPrice = row.skip(8).first();
           const saving = row.skip(9).first();
           const savingPercentage = row.skip(10).first();
-          const unitPrice = row.skip(11).first();
+          const unitPrice = Immutable.fromJS(row
+            .skip(11)
+            .first()
+            .split(','));
           const multiBuy = Immutable.fromJS(row
             .skip(12)
             .first()
@@ -106,8 +109,31 @@ const start = async () => {
             storeProductId = storeProduct.some().get('id');
 
             const result = await loadLatestProductPrice(storeId, storeProductId, false);
+            const priceDetails = ImmutableEx.removeNullAndUndefinedProps(Map({
+              specialType,
+              saving: saving ? parseFloat(saving) : 0,
+              savingPercentage: savingPercentage ? parseFloat(savingPercentage) : 0,
+              currentPrice: currentPrice ? parseFloat(currentPrice) : 0,
+              wasPrice: wasPrice ? parseFloat(wasPrice) : undefined,
+              offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
+              multiBuy:
+                    multiBuy.count() === 2
+                      ? Map({
+                        awardQuantity: multiBuy.first(),
+                        awardValue: parseFloat(multiBuy.last()),
+                      })
+                      : undefined,
+              unitPrice:
+                    unitPrice.count() === 2
+                      ? Map({
+                        size: unitPrice.first(),
+                        price: parseFloat(unitPrice.last()),
+                      })
+                      : undefined,
+            }));
 
             if (result.get('productPrice').isNone()) {
+              console.log(JSON.stringify(priceDetails.toJS(), null, 2));
               await productPriceService.create(
                 Map({
                   name,
@@ -125,34 +151,38 @@ const start = async () => {
                   currentPrice,
                   wasPrice,
                   storeProductId,
-                  priceDetails: Map(),
+                  status: 'A',
+                  priceDetails,
                 }),
                 null,
                 global.parseServerSessionToken,
               );
             } else {
+              const productPrice = result.get('productPrice').some();
+              const currentPriceDetails = productPrice.get('priceDetails');
+
+              if (priceDetails.equals(currentPriceDetails)) {
+                return;
+              }
+
               await productPriceService.update(
-                result
-                  .get('productPrice')
-                  .some()
-                  .merge(Map({
-                    name,
-                    description,
-                    barcode,
-                    size,
-                    storeId,
-                    createdByCrawler: false,
-                    imageUrl,
-                    tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
-                    special: specialType ? specialType.localeCompare('none') !== 0 : false,
-                    saving: saving ? parseFloat(saving) : 0,
-                    savingPercentage: savingPercentage ? parseFloat(savingPercentage) : 0,
-                    offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
-                    currentPrice,
-                    wasPrice,
-                    storeProductId,
-                    priceDetails: Map(),
-                  })),
+                productPrice.merge(Map({
+                  name,
+                  description,
+                  barcode,
+                  size,
+                  storeId,
+                  createdByCrawler: false,
+                  imageUrl,
+                  tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
+                  special: specialType ? specialType.localeCompare('none') !== 0 : false,
+                  saving: saving ? parseFloat(saving) : 0,
+                  savingPercentage: savingPercentage ? parseFloat(savingPercentage) : 0,
+                  offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
+                  storeProductId,
+                  status: 'A',
+                  priceDetails,
+                })),
                 global.parseServerSessionToken,
               );
             }
