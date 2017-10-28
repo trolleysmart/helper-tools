@@ -155,3 +155,20 @@ export const loadLatestProductPrice = async (storeId, storeProductId, createdByC
 
   return Map({ storeProductId, productPrice: Maybe.Some(productPrices.first()) });
 };
+
+export const loadActiveProductPrices = async (storeId, storeProductId, createdByCrawler) => {
+  const productPrices = await new ProductPriceService().search(
+    Map({
+      topMost: true,
+      conditions: Map({
+        storeId,
+        storeProductId,
+        createdByCrawler,
+        status: 'A',
+      }),
+    }),
+    global.parseServerSessionToken,
+  );
+
+  return productPrices;
+};
