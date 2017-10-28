@@ -5,8 +5,6 @@ import { Maybe } from 'monet';
 import Parse from 'parse/node';
 import { ParseWrapperService, UserService } from 'micro-business-parse-server-common';
 import {
-  CrawledProductPriceService,
-  CrawledStoreProductService,
   ProductPriceService,
   StapleItemService,
   StoreProductService,
@@ -114,39 +112,23 @@ export const cloneStapleTemplateItems = async (stapleTemplateItems, userId) => {
     .toArray());
 };
 
-export const loadCrawledStoreProducts = async (storeId) => {
-  let crawledStoreProducts = List();
-  const result = await new CrawledStoreProductService().searchAll(Map({ conditions: Map({ storeId }) }), global.parseServerSessionToken);
+export const loadStoreProduct = async (storeId, createdByCrawler, name) => {
+  const criteria = Map({ conditions: Map({ storeId, createdByCrawler, name }) });
 
-  try {
-    result.event.subscribe((info) => {
-      crawledStoreProducts = crawledStoreProducts.push(info);
-    });
+  const storeProducts = await new StoreProductService().search(criteria, global.parseServerSessionToken);
 
-    await result.promise;
-  } finally {
-    result.event.unsubscribeAll();
+  if (storeProducts.isEmpty()) {
+    return Maybe.None();
+  } else if (storeProducts.count() === 1) {
+    return Maybe.Some(storeProducts.first());
   }
 
-  return crawledStoreProducts;
+  throw new Error(`Multiple store product found for provided name: ${name}`);
 };
 
-export const loadLatestCrawledProductPrice = async (storeId, crawledStoreProductId) => {
-  const crawledProductPrices = await new CrawledProductPriceService().search(
-    Map({ topMost: true, conditions: Map({ storeId, crawledStoreProductId }) }),
-    global.parseServerSessionToken,
-  );
-
-  if (crawledProductPrices.isEmpty()) {
-    return Map({ crawledStoreProductId, crawledProductPrice: Maybe.None() });
-  }
-
-  return Map({ crawledStoreProductId, crawledProductPrice: Maybe.Some(crawledProductPrices.first()) });
-};
-
-export const loadStoreProducts = async (storeId) => {
+export const loadStoreProducts = async (storeId, createdByCrawler) => {
   let storeProducts = List();
-  const result = await new StoreProductService().searchAll(Map({ conditions: Map({ storeId }) }), global.parseServerSessionToken);
+  const result = await new StoreProductService().searchAll(Map({ conditions: Map({ storeId, createdByCrawler }) }), global.parseServerSessionToken);
 
   try {
     result.event.subscribe((info) => {
@@ -161,9 +143,9 @@ export const loadStoreProducts = async (storeId) => {
   return storeProducts;
 };
 
-export const loadLatestProductPrice = async (storeId, storeProductId) => {
+export const loadLatestProductPrice = async (storeId, storeProductId, createdByCrawler) => {
   const productPrices = await new ProductPriceService().search(
-    Map({ topMost: true, conditions: Map({ storeId, storeProductId }) }),
+    Map({ topMost: true, conditions: Map({ storeId, storeProductId, createdByCrawler }) }),
     global.parseServerSessionToken,
   );
 

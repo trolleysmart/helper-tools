@@ -32,6 +32,7 @@
     "micro-business-common-javascript": "^1.0.0-alpha.12",
     "micro-business-parse-server-common": "^1.0.2-alpha.34",
     "mime": "^2.0.3",
+    "moment": "^2.19.1",
     "monet": "^0.8.10",
     "parse": "^1.10.1",
     "request": "^2.83.0",

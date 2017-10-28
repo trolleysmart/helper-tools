@@ -8,6 +8,7 @@ import { ImmutableEx } from 'micro-business-common-javascript';
 import { initializeParse, getStore, loadStoreProducts, loadLatestProductPrice, loadStoreTags } from './Common';
 
 const optionDefinitions = [
+  { name: 'exportCrawledData', type: Boolean },
   { name: 'storeKey', type: String },
   { name: 'csvFilePath', type: String },
   { name: 'delimiter', type: String },
@@ -35,7 +36,8 @@ const start = async () => {
   }
 
   const storeId = (await getStore(options.storeKey)).get('id');
-  const storeProducts = await loadStoreProducts(storeId);
+  const exportCrawledData = options.exportCrawledData || false;
+  const storeProducts = await loadStoreProducts(storeId, exportCrawledData);
   const storeTags = await loadStoreTags(storeId, { includeTag: true });
   const separator = options.delimiter ? options.delimiter : '|';
   const newLineDelimiter = options.rowDelimiter ? options.rowDelimiter : '\n';
@@ -70,7 +72,7 @@ const start = async () => {
   const splittedStoreProducts = ImmutableEx.splitIntoChunks(storeProducts, 100);
 
   await BluebirdPromise.each(splittedStoreProducts.toArray(), async (storeProductsChunck) => {
-    const productPricesPromises = storeProductsChunck.map(storeProduct => loadLatestProductPrice(storeId, storeProduct.get('id')));
+    const productPricesPromises = storeProductsChunck.map(storeProduct => loadLatestProductPrice(storeId, storeProduct.get('id'), exportCrawledData));
     const productPrices = await Promise.all(productPricesPromises.toArray());
 
     storeProductsChunck.forEach((storeProduct) => {
