@@ -59,10 +59,10 @@ const start = async () => {
             .first()
             .split(','));
           const offerEndDate = row.skip(6).first();
-          const currentPrice = row.skip(7).first();
-          const wasPrice = row.skip(8).first();
-          const saving = row.skip(9).first();
-          const savingPercentage = row.skip(10).first();
+          const currentPriceStr = row.skip(7).first();
+          const wasPriceStr = row.skip(8).first();
+          const savingStr = row.skip(9).first();
+          const savingPercentageStr = row.skip(10).first();
           const unitPrice = Immutable.fromJS(row
             .skip(11)
             .first()
@@ -109,12 +109,16 @@ const start = async () => {
             storeProductId = storeProduct.some().get('id');
 
             const result = await loadLatestProductPrice(storeId, storeProductId, false);
+            const currentPrice = currentPriceStr ? parseFloat(currentPriceStr) : 0;
+            const wasPrice = wasPriceStr ? parseFloat(wasPriceStr) : undefined;
+            const savingPercentage = savingPercentageStr ? parseFloat(savingPercentageStr) : 0;
+            const saving = savingStr ? parseFloat(savingStr) : 0;
             const priceDetails = ImmutableEx.removeNullAndUndefinedProps(Map({
               specialType,
-              saving: saving ? parseFloat(saving) : 0,
-              savingPercentage: savingPercentage ? parseFloat(savingPercentage) : 0,
-              currentPrice: currentPrice ? parseFloat(currentPrice) : 0,
-              wasPrice: wasPrice ? parseFloat(wasPrice) : undefined,
+              saving,
+              savingPercentage,
+              currentPrice,
+              wasPrice,
               offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
               multiBuy:
                     multiBuy.count() === 2
@@ -141,18 +145,16 @@ const start = async () => {
                   barcode,
                   size,
                   storeId,
-                  createdByCrawler: false,
                   imageUrl,
                   tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
                   special: specialType ? specialType.localeCompare('node') === 0 : false,
-                  saving: saving ? parseFloat(saving) : 0,
-                  savingPercentage: savingPercentage ? parseFloat(savingPercentage) : 0,
+                  saving,
+                  savingPercentage,
                   offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
-                  currentPrice,
-                  wasPrice,
                   storeProductId,
                   status: 'A',
                   priceDetails,
+                  createdByCrawler: false,
                 }),
                 null,
                 global.parseServerSessionToken,
@@ -172,16 +174,16 @@ const start = async () => {
                   barcode,
                   size,
                   storeId,
-                  createdByCrawler: false,
                   imageUrl,
                   tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
                   special: specialType ? specialType.localeCompare('none') !== 0 : false,
-                  saving: saving ? parseFloat(saving) : 0,
-                  savingPercentage: savingPercentage ? parseFloat(savingPercentage) : 0,
+                  saving,
+                  savingPercentage,
                   offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
                   storeProductId,
                   status: 'A',
                   priceDetails,
+                  createdByCrawler: false,
                 })),
                 global.parseServerSessionToken,
               );
