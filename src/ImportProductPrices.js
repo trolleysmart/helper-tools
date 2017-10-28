@@ -58,7 +58,7 @@ const start = async () => {
             .skip(4)
             .first()
             .split(','));
-          const offerEndDate = row.skip(6).first();
+          const offerEndDateStr = row.skip(6).first();
           const currentPriceStr = row.skip(7).first();
           const wasPriceStr = row.skip(8).first();
           const savingStr = row.skip(9).first();
@@ -75,6 +75,7 @@ const start = async () => {
           const imageUrl = row.skip(14).first();
 
           const storeProduct = await loadStoreProduct(storeId, false, name);
+          const tagIds = allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id'));
           let storeProductId;
 
           if (storeProduct.isNone()) {
@@ -87,7 +88,7 @@ const start = async () => {
                 storeId,
                 createdByCrawler: false,
                 imageUrl,
-                tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
+                tagIds,
               }),
               null,
               global.parseServerSessionToken,
@@ -101,7 +102,7 @@ const start = async () => {
                 storeId,
                 createdByCrawler: false,
                 imageUrl,
-                tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
+                tagIds,
               })),
               global.parseServerSessionToken,
             );
@@ -113,13 +114,15 @@ const start = async () => {
             const wasPrice = wasPriceStr ? parseFloat(wasPriceStr) : undefined;
             const savingPercentage = savingPercentageStr ? parseFloat(savingPercentageStr) : 0;
             const saving = savingStr ? parseFloat(savingStr) : 0;
+            const offerEndDate = offerEndDateStr ? moment(offerEndDateStr, 'DD/MM/YYYY').toDate() : undefined;
+            const special = specialType ? specialType.localeCompare('node') === 0 : false;
             const priceDetails = ImmutableEx.removeNullAndUndefinedProps(Map({
               specialType,
               saving,
               savingPercentage,
               currentPrice,
               wasPrice,
-              offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
+              offerEndDate,
               multiBuy:
                     multiBuy.count() === 2
                       ? Map({
@@ -146,11 +149,11 @@ const start = async () => {
                   size,
                   storeId,
                   imageUrl,
-                  tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
-                  special: specialType ? specialType.localeCompare('node') === 0 : false,
+                  tagIds,
+                  special,
                   saving,
                   savingPercentage,
-                  offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
+                  offerEndDate,
                   storeProductId,
                   status: 'A',
                   priceDetails,
@@ -175,11 +178,11 @@ const start = async () => {
                   size,
                   storeId,
                   imageUrl,
-                  tagIds: allTags.filter(tag => tags.find(_ => tag.get('key').localeCompare(_) === 0)).map(tag => tag.get('id')),
-                  special: specialType ? specialType.localeCompare('none') !== 0 : false,
+                  tagIds,
+                  special,
                   saving,
                   savingPercentage,
-                  offerEndDate: offerEndDate ? moment(offerEndDate, 'DD/MM/YYYY').toDate() : undefined,
+                  offerEndDate,
                   storeProductId,
                   status: 'A',
                   priceDetails,
