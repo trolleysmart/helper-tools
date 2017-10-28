@@ -5,8 +5,6 @@ import { CountdownWebCrawlerService, Health2000WebCrawlerService, WarehouseWebCr
 import util from 'util';
 import { initializeParse } from './Common';
 
-const setTimeoutPromise = util.promisify(setTimeout);
-
 const optionDefinitions = [
   { name: 'storeKeys', type: String },
   { name: 'concurrentCrawlingCount', type: Number },
@@ -17,6 +15,7 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
+const setTimeoutPromise = util.promisify(setTimeout);
 let countdownStoreTags;
 let health2000StoreTags;
 let warehouseStoreTags;
