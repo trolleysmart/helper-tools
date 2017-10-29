@@ -89,13 +89,13 @@ const start = async () => {
             .toSet()
             .toList();
           const storeProductDetails = Map({
-            name: storeProduct.get('name'),
-            description: storeProduct.get('description'),
-            barcode: storeProduct.get('barcode'),
-            size: storeProduct.get('size'),
+            name: storeProductAndPrice.get('name'),
+            description: storeProductAndPrice.get('description'),
+            barcode: storeProductAndPrice.get('barcode'),
+            size: storeProductAndPrice.get('size'),
             storeId,
             createdByCrawler: false,
-            imageUrl: storeProduct.get('imageUrl'),
+            imageUrl: storeProductAndPrice.get('imageUrl'),
             tagIds,
           });
 
@@ -153,7 +153,7 @@ const start = async () => {
             savingPercentage = temp / wasPrice;
           }
 
-          const priceToDisplay = multiBuy.count() === 2 ? parseFloat(multiBuy.last()) / parseInt(multiBuy.first(), 10) : currentPrice;
+          const priceToDisplay = multiBuy.count() === 2 ? parseFloat(multiBuy.last()) : currentPrice;
           const priceDetails = ImmutableEx.removeNullAndUndefinedProps(Map({
             specialType: storeProductAndPrice.get('specialType'),
             saving,
@@ -187,7 +187,7 @@ const start = async () => {
             imageUrl: storeProductAndPrice.get('imageUrl'),
             tagIds: storeProduct.get('tagIds'),
             status: 'A',
-            special: storeProductAndPrice.get('specialType') ? storeProductAndPrice.get('specialType').localeCompare('none') === 0 : false,
+            special: storeProductAndPrice.get('specialType') ? storeProductAndPrice.get('specialType').localeCompare('none') !== 0 : false,
             priceToDisplay,
             priceDetails,
             saving,
