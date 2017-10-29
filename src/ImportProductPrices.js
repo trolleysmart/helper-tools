@@ -76,7 +76,8 @@ const start = async () => {
             imageUrl: row.skip(14).first(),
           });
         });
-      const splittedStoreProductsAndPrices = ImmutableEx.splitIntoChunks(storeProductsAndPrices);
+
+      const splittedStoreProductsAndPrices = ImmutableEx.splitIntoChunks(storeProductsAndPrices, 100);
 
       // Updating store products details
       await BluebirdPromise.each(splittedStoreProductsAndPrices.toArray(), storeProductsAndPricesChunck =>
