@@ -41,7 +41,9 @@ export const getStore = async (key) => {
     throw new Error(`Multiple store found with store key: ${this.storeKey}.`);
   }
 
-  return stores.isEmpty() ? storeService.read(await storeService.create(Map({ key })), null, global.parseServerSessionToken) : stores.first();
+  return stores.isEmpty()
+    ? storeService.read(await storeService.create(Map({ key }), null, global.parseServerSessionToken), null, global.parseServerSessionToken)
+    : stores.first();
 };
 
 export const loadStoreTags = async (storeId, { includeTag } = {}) => {
