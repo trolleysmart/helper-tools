@@ -16,7 +16,7 @@
     "test": "jest",
     "test:watch": "jest --watch",
     "flow": "flow",
-    "precommit": "lint-staged && npm run fixlint"
+    "precommit": "lint-staged"
   },
   "author": "Micro Business ltd<micro.business.ltd@gmail.com>",
   "homepage": "https://bitbucket.org/microbusiness/trolley-smart-helper-tools#readme",
@@ -67,6 +67,7 @@
   "lint-staged": {
     "src/**/*.{js,jsx,json,css}": [
       "prettier --write --single-quote true --trailing-comma all --print-width 150",
+      "npm run fixlint",
       "git add"
     ]
   }
