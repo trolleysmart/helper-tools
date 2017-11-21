@@ -95,6 +95,7 @@ const start = async () => {
             size: storeProductAndPrice.get('size'),
             storeId,
             createdByCrawler: false,
+            authorizedToDisplay: true,
             imageUrl: storeProductAndPrice.get('imageUrl'),
             tagIds,
           });
@@ -118,7 +119,11 @@ const start = async () => {
           if (!storeProductAndPrice) {
             if (!productPrices.isEmpty()) {
               await Promise.all(productPrices
-                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), global.parseServerSessionToken))
+                .map(_ =>
+                  productPriceService.update(
+                    _.merge(Map({ status: 'I', createdByCrawler: false, authorizedToDisplay: true })),
+                    global.parseServerSessionToken,
+                  ))
                 .toArray());
             }
 
@@ -184,6 +189,7 @@ const start = async () => {
             storeId,
             storeProductId: storeProduct.get('id'),
             createdByCrawler: false,
+            authorizedToDisplay: true,
             imageUrl: storeProductAndPrice.get('imageUrl'),
             tagIds: storeProduct.get('tagIds'),
             status: 'A',
@@ -203,7 +209,11 @@ const start = async () => {
 
             if (!notMatchedProductPrices.isEmpty()) {
               await Promise.all(notMatchedProductPrices
-                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), global.parseServerSessionToken))
+                .map(_ =>
+                  productPriceService.update(
+                    _.merge(Map({ status: 'I', createdByCrawler: false, authorizedToDisplay: true })),
+                    global.parseServerSessionToken,
+                  ))
                 .toArray());
             }
 
@@ -213,10 +223,18 @@ const start = async () => {
             if (matchedProductPrices.count() > 1) {
               await Promise.all(matchedProductPrices
                 .skip(1)
-                .map(_ => productPriceService.update(_.merge(Map({ status: 'I', createdByCrawler: false })), global.parseServerSessionToken))
+                .map(_ =>
+                  productPriceService.update(
+                    _.merge(Map({ status: 'I', createdByCrawler: false, authorizedToDisplay: true })),
+                    global.parseServerSessionToken,
+                  ))
                 .toArray());
             } else if (matchedProductPrices.count() === 0) {
-              await productPriceService.create(productPrice.set('createdByCrawler', false), null, global.parseServerSessionToken);
+              await productPriceService.create(
+                productPrice.set('createdByCrawler', false).set('authorizedToDisplay', true),
+                null,
+                global.parseServerSessionToken,
+              );
             }
           }
         })));
