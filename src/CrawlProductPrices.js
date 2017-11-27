@@ -1,7 +1,12 @@
 // @flow
 
 import commandLineArgs from 'command-line-args';
-import { CountdownWebCrawlerService, Health2000WebCrawlerService, WarehouseWebCrawlerService } from 'trolley-smart-store-crawler';
+import {
+  CountdownWebCrawlerService,
+  Health2000WebCrawlerService,
+  ValuemartWebCrawlerService,
+  WarehouseWebCrawlerService,
+} from 'trolley-smart-store-crawler';
 import util from 'util';
 import { initializeParse } from './Common';
 
@@ -70,6 +75,31 @@ const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
     .catch(() => crawlHealth2000ProductsDetailsAndCurrentPrice());
 };
 
+const crawlValuemartProductsDetailsAndCurrentPrice = async () => {
+  const service = new ValuemartWebCrawlerService({
+    logVerboseFunc: message => console.log(message),
+    logInfoFunc: message => console.log(message),
+    logErrorFunc: message => console.log(message),
+    sessionToken: global.parseServerSessionToken,
+    concurrentCrawlingCount: options.concurrentCrawlingCount,
+  });
+
+  health2000StoreTags = health2000StoreTags || (await service.getStoreTags());
+
+  service
+    .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
+    .then((count) => {
+      if (count === 0) {
+        setTimeoutPromise(1000 * 60 * 30).then(() => crawlValuemartProductsDetailsAndCurrentPrice());
+
+        return;
+      }
+
+      crawlValuemartProductsDetailsAndCurrentPrice();
+    })
+    .catch(() => crawlValuemartProductsDetailsAndCurrentPrice());
+};
+
 const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
   const service = new WarehouseWebCrawlerService({
     logVerboseFunc: message => console.log(message),
@@ -106,6 +136,10 @@ const start = async () => {
 
   if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
     crawlHealth2000ProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+  }
+
+  if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
+    crawlValuemartProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
   }
 
   if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
