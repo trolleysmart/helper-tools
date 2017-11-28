@@ -19,6 +19,7 @@ const optionDefinitions = [
   { name: 'parseServerUrl', type: String },
   { name: 'crawlStoreTags', type: Boolean },
   { name: 'crawlProducts', type: Boolean },
+  { name: 'crawlProductPrices', type: Boolean },
 ];
 const options = commandLineArgs(optionDefinitions);
 
@@ -97,20 +98,22 @@ const start = async () => {
       }
     }
 
-    if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(countdownService);
-    }
+    if (options.crawlProductPrices) {
+      if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
+        crawlProductsDetailsAndCurrentPrice(countdownService);
+      }
 
-    if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(health2000Service);
-    }
+      if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
+        crawlProductsDetailsAndCurrentPrice(health2000Service);
+      }
 
-    if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(valuemartService);
-    }
+      if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
+        crawlProductsDetailsAndCurrentPrice(valuemartService);
+      }
 
-    if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(warehouseService);
+      if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
+        crawlProductsDetailsAndCurrentPrice(warehouseService);
+      }
     }
   } catch (ex) {
     console.error(ex);
