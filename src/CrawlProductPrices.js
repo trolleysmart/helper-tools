@@ -126,24 +126,27 @@ const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
 };
 
 const start = async () => {
-  await initializeParse(options);
+  try {
+    await initializeParse(options);
 
-  const storeKeys = (options.storeKeys || '').split(',');
+    const storeKeys = (options.storeKeys || '').split(',');
 
-  if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
-    crawlCountdownProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
-  }
+    if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
+      crawlCountdownProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+    }
 
-  if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
-    crawlHealth2000ProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
-  }
+    if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
+      crawlHealth2000ProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+    }
 
-  if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
-    crawlValuemartProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
-  }
-
-  if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
-    crawlWarehouseProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+    if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
+      crawlValuemartProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+    }
+    if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
+      crawlWarehouseProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+    }
+  } catch (ex) {
+    console.error(ex);
   }
 };
 

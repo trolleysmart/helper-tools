@@ -24,55 +24,59 @@ const options = commandLineArgs(optionDefinitions);
 initializeParse(options);
 
 const start = async () => {
-  const storeTags = await loadStoreTags((await getStore(options.storeKey)).get('id'));
-  const tags = await loadTags();
-  const storeTagService = new StoreTagService();
+  try {
+    const storeTags = await loadStoreTags((await getStore(options.storeKey)).get('id'));
+    const tags = await loadTags();
+    const storeTagService = new StoreTagService();
 
-  const parser = csvParser(
-    { delimiter: options.delimiter ? options.delimiter : ',', trim: true, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' },
-    async (err, data) => {
-      if (err) {
-        console.log(err);
+    const parser = csvParser(
+      { delimiter: options.delimiter ? options.delimiter : ',', trim: true, rowDelimiter: options.rowDelimiter ? options.rowDelimiter : '\n' },
+      async (err, data) => {
+        if (err) {
+          console.log(err);
 
-        return;
-      }
+          return;
+        }
 
-      const splittedRows = ImmutableEx.splitIntoChunks(Immutable.fromJS(data).skip(1), 100); // Skipping the first item as it is the CSV header
+        const splittedRows = ImmutableEx.splitIntoChunks(Immutable.fromJS(data).skip(1), 100); // Skipping the first item as it is the CSV header
 
-      await BluebirdPromise.each(splittedRows.toArray(), rowChunck =>
-        Promise.all(rowChunck.map(async (rawRow) => {
-          const row = Immutable.fromJS(rawRow);
-          const storeTagKey = row.first();
-          const tagKey = row.skip(6).first();
+        await BluebirdPromise.each(splittedRows.toArray(), rowChunck =>
+          Promise.all(rowChunck.map(async (rawRow) => {
+            const row = Immutable.fromJS(rawRow);
+            const storeTagKey = row.first();
+            const tagKey = row.skip(6).first();
 
-          if (!tagKey) {
-            console.log(`Warning: No tag set for storeTag: ${storeTagKey}`);
+            if (!tagKey) {
+              console.log(`Warning: No tag set for storeTag: ${storeTagKey}`);
 
-            return;
-          }
+              return;
+            }
 
-          const storeTag = storeTags.find(_ => _.get('key').localeCompare(storeTagKey) === 0);
+            const storeTag = storeTags.find(_ => _.get('key').localeCompare(storeTagKey) === 0);
 
-          if (!storeTag) {
-            console.log(`Warning: No store tag found in DB for storeTag: ${storeTagKey}`);
+            if (!storeTag) {
+              console.log(`Warning: No store tag found in DB for storeTag: ${storeTagKey}`);
 
-            return;
-          }
+              return;
+            }
 
-          const tag = tags.find(_ => _.get('key').localeCompare(tagKey) === 0);
+            const tag = tags.find(_ => _.get('key').localeCompare(tagKey) === 0);
 
-          if (!tag) {
-            console.log(`Warning: No tag found in DB for tag: ${tagKey}`);
+            if (!tag) {
+              console.log(`Warning: No tag found in DB for tag: ${tagKey}`);
 
-            return;
-          }
+              return;
+            }
 
-          await storeTagService.update(storeTag.set('tagId', tag.get('id')), global.parseServerSessionToken);
-        })));
-    },
-  );
+            await storeTagService.update(storeTag.set('tagId', tag.get('id')), global.parseServerSessionToken);
+          })));
+      },
+    );
 
-  fs.createReadStream(options.csvFilePath).pipe(parser);
+    fs.createReadStream(options.csvFilePath).pipe(parser);
+  } catch (ex) {
+    console.error(ex);
+  }
 };
 
 start();

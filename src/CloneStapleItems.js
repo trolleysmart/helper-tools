@@ -14,19 +14,23 @@ const optionDefinitions = [
 const options = commandLineArgs(optionDefinitions);
 
 const start = async () => {
-  await initializeParse(options);
+  try {
+    await initializeParse(options);
 
-  const userIds = Immutable.fromJS(options.userIds.trim().split(','))
-    .map(userId => userId.trim())
-    .filter(userId => userId);
+    const userIds = Immutable.fromJS(options.userIds.trim().split(','))
+      .map(userId => userId.trim())
+      .filter(userId => userId);
 
-  if (!userIds.isEmpty()) {
-    const stapleTemplateItems = await loadStapleTemplateItems();
+    if (!userIds.isEmpty()) {
+      const stapleTemplateItems = await loadStapleTemplateItems();
 
-    await Promise.all(userIds.map(userId => cloneStapleTemplateItems(stapleTemplateItems, userId)).toArray());
+      await Promise.all(userIds.map(userId => cloneStapleTemplateItems(stapleTemplateItems, userId)).toArray());
+    }
+
+    console.log('Finised cloning staple template items for provided users');
+  } catch (ex) {
+    console.error(ex);
   }
-
-  console.log('Finised cloning staple template items for provided users');
 };
 
 start();
