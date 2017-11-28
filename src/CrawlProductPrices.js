@@ -17,6 +17,8 @@ const optionDefinitions = [
   { name: 'javaScriptKey', type: String },
   { name: 'masterKey', type: String },
   { name: 'parseServerUrl', type: String },
+  { name: 'crawlStoreTags', type: Boolean },
+  { name: 'crawlProducts', type: Boolean },
 ];
 const options = commandLineArgs(optionDefinitions);
 
@@ -54,20 +56,61 @@ const start = async () => {
 
     const storeKeys = (options.storeKeys || '').split(',');
 
+    const countdownService = createServiceInstance(CountdownWebCrawlerService);
+    const health2000Service = createServiceInstance(Health2000WebCrawlerService);
+    const valuemartService = createServiceInstance(ValuemartWebCrawlerService);
+    const warehouseService = createServiceInstance(WarehouseWebCrawlerService);
+
+    if (options.crawlStoreTags) {
+      if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
+        await countdownService.crawlAndSyncProductCategoriesToStoreTags();
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
+        await health2000Service.crawlAndSyncProductCategoriesToStoreTags();
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
+        await valuemartService.crawlAndSyncProductCategoriesToStoreTags();
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
+        await warehouseService.crawlAndSyncProductCategoriesToStoreTags();
+      }
+    }
+
+    if (options.crawlProducts) {
+      if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
+        await countdownService.crawlProducts();
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
+        await health2000Service.crawlProducts();
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
+        await valuemartService.crawlProducts();
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
+        await warehouseService.crawlProducts();
+      }
+    }
+
     if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(createServiceInstance(CountdownWebCrawlerService));
+      crawlProductsDetailsAndCurrentPrice(countdownService);
     }
 
     if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(createServiceInstance(Health2000WebCrawlerService));
+      crawlProductsDetailsAndCurrentPrice(health2000Service);
     }
 
     if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(createServiceInstance(ValuemartWebCrawlerService));
+      crawlProductsDetailsAndCurrentPrice(valuemartService);
     }
 
     if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
-      crawlProductsDetailsAndCurrentPrice(createServiceInstance(WarehouseWebCrawlerService));
+      crawlProductsDetailsAndCurrentPrice(warehouseService);
     }
   } catch (ex) {
     console.error(ex);
