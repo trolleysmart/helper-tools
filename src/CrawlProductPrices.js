@@ -21,12 +21,9 @@ const optionDefinitions = [
 const options = commandLineArgs(optionDefinitions);
 
 const setTimeoutPromise = util.promisify(setTimeout);
-let countdownStoreTags;
-let health2000StoreTags;
-let warehouseStoreTags;
 
-const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
-  const service = new CountdownWebCrawlerService({
+const createServiceInstance = async Service =>
+  new Service({
     logVerboseFunc: message => console.log(message),
     logInfoFunc: message => console.log(message),
     logErrorFunc: message => console.log(message),
@@ -34,95 +31,21 @@ const crawlCountdownProductsDetailsAndCurrentPrice = async () => {
     concurrentCrawlingCount: options.concurrentCrawlingCount,
   });
 
-  countdownStoreTags = countdownStoreTags || (await service.getStoreTags());
+const crawlProductsDetailsAndCurrentPrice = async (service, storeTags) => {
+  const finalStoreTags = storeTags || (await service.getStoreTags());
 
   service
-    .crawlProductsDetailsAndCurrentPrice(countdownStoreTags)
+    .crawlProductsDetailsAndCurrentPrice(finalStoreTags)
     .then((count) => {
       if (count === 0) {
-        setTimeoutPromise(1000 * 60 * 30).then(() => crawlCountdownProductsDetailsAndCurrentPrice());
+        setTimeoutPromise(1000 * 60 * 30).then(() => crawlProductsDetailsAndCurrentPrice(service, finalStoreTags));
 
         return;
       }
 
-      crawlCountdownProductsDetailsAndCurrentPrice();
+      crawlProductsDetailsAndCurrentPrice(service, finalStoreTags);
     })
-    .catch(() => crawlCountdownProductsDetailsAndCurrentPrice());
-};
-
-const crawlHealth2000ProductsDetailsAndCurrentPrice = async () => {
-  const service = new Health2000WebCrawlerService({
-    logVerboseFunc: message => console.log(message),
-    logInfoFunc: message => console.log(message),
-    logErrorFunc: message => console.log(message),
-    sessionToken: global.parseServerSessionToken,
-    concurrentCrawlingCount: options.concurrentCrawlingCount,
-  });
-
-  health2000StoreTags = health2000StoreTags || (await service.getStoreTags());
-
-  service
-    .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
-    .then((count) => {
-      if (count === 0) {
-        setTimeoutPromise(1000 * 60 * 30).then(() => crawlHealth2000ProductsDetailsAndCurrentPrice());
-
-        return;
-      }
-
-      crawlHealth2000ProductsDetailsAndCurrentPrice();
-    })
-    .catch(() => crawlHealth2000ProductsDetailsAndCurrentPrice());
-};
-
-const crawlValuemartProductsDetailsAndCurrentPrice = async () => {
-  const service = new ValuemartWebCrawlerService({
-    logVerboseFunc: message => console.log(message),
-    logInfoFunc: message => console.log(message),
-    logErrorFunc: message => console.log(message),
-    sessionToken: global.parseServerSessionToken,
-    concurrentCrawlingCount: options.concurrentCrawlingCount,
-  });
-
-  health2000StoreTags = health2000StoreTags || (await service.getStoreTags());
-
-  service
-    .crawlProductsDetailsAndCurrentPrice(health2000StoreTags)
-    .then((count) => {
-      if (count === 0) {
-        setTimeoutPromise(1000 * 60 * 30).then(() => crawlValuemartProductsDetailsAndCurrentPrice());
-
-        return;
-      }
-
-      crawlValuemartProductsDetailsAndCurrentPrice();
-    })
-    .catch(() => crawlValuemartProductsDetailsAndCurrentPrice());
-};
-
-const crawlWarehouseProductsDetailsAndCurrentPrice = async () => {
-  const service = new WarehouseWebCrawlerService({
-    logVerboseFunc: message => console.log(message),
-    logInfoFunc: message => console.log(message),
-    logErrorFunc: message => console.log(message),
-    sessionToken: global.parseServerSessionToken,
-    concurrentCrawlingCount: options.concurrentCrawlingCount,
-  });
-
-  warehouseStoreTags = warehouseStoreTags || (await service.getStoreTags());
-
-  service
-    .crawlProductsDetailsAndCurrentPrice(warehouseStoreTags)
-    .then((count) => {
-      if (count === 0) {
-        setTimeoutPromise(1000 * 60 * 30).then(() => crawlWarehouseProductsDetailsAndCurrentPrice());
-
-        return;
-      }
-
-      crawlWarehouseProductsDetailsAndCurrentPrice();
-    })
-    .catch(() => crawlWarehouseProductsDetailsAndCurrentPrice());
+    .catch(() => crawlProductsDetailsAndCurrentPrice(service, finalStoreTags));
 };
 
 const start = async () => {
@@ -132,18 +55,19 @@ const start = async () => {
     const storeKeys = (options.storeKeys || '').split(',');
 
     if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
-      crawlCountdownProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+      crawlProductsDetailsAndCurrentPrice(createServiceInstance(CountdownWebCrawlerService));
     }
 
     if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
-      crawlHealth2000ProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+      crawlProductsDetailsAndCurrentPrice(createServiceInstance(Health2000WebCrawlerService));
     }
 
     if (storeKeys.find(_ => _.localeCompare('valuemart') === 0)) {
-      crawlValuemartProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+      crawlProductsDetailsAndCurrentPrice(createServiceInstance(ValuemartWebCrawlerService));
     }
+
     if (storeKeys.find(_ => _.localeCompare('warehouse') === 0)) {
-      crawlWarehouseProductsDetailsAndCurrentPrice(global.parseServerSessionToken);
+      crawlProductsDetailsAndCurrentPrice(createServiceInstance(WarehouseWebCrawlerService));
     }
   } catch (ex) {
     console.error(ex);
