@@ -21,7 +21,7 @@ export const initializeParse = async (options) => {
     options.masterKey ? options.masterKey : 'master_key',
   );
 
-  Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:12345/parse';
+  Parse.serverURL = options.parseServerUrl ? options.parseServerUrl : 'http://localhost:1337/parse';
 
   const user = await ParseWrapperService.logIn(process.env.CRAWLER_USERNAME, process.env.CRAWLER_PASSWORD);
 
