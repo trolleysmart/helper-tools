@@ -25,7 +25,7 @@ const options = commandLineArgs(optionDefinitions);
 
 const setTimeoutPromise = util.promisify(setTimeout);
 
-const createServiceInstance = async Service =>
+const createServiceInstance = Service =>
   new Service({
     logVerboseFunc: message => console.log(message),
     logInfoFunc: message => console.log(message),
