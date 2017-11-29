@@ -36,7 +36,7 @@
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
     "trolley-smart-parse-server-common": "^1.0.0-alpha.49",
-    "trolley-smart-store-crawler": "^1.0.0-alpha.64"
+    "trolley-smart-store-crawler": "^1.0.0-alpha.66"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",

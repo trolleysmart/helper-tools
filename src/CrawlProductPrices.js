@@ -1,12 +1,7 @@
 // @flow
 
 import commandLineArgs from 'command-line-args';
-import {
-  CountdownWebCrawlerService,
-  Health2000WebCrawlerService,
-  ValuemartWebCrawlerService,
-  WarehouseWebCrawlerService,
-} from 'trolley-smart-store-crawler';
+import { Countdown, Guruji, Health2000, Valuemart, Warehouse } from 'trolley-smart-store-crawler';
 import util from 'util';
 import { initializeParse } from './Common';
 
@@ -57,14 +52,19 @@ const start = async () => {
 
     const storeKeys = (options.storeKeys || '').split(',');
 
-    const countdownService = createServiceInstance(CountdownWebCrawlerService);
-    const health2000Service = createServiceInstance(Health2000WebCrawlerService);
-    const valuemartService = createServiceInstance(ValuemartWebCrawlerService);
-    const warehouseService = createServiceInstance(WarehouseWebCrawlerService);
+    const countdownService = createServiceInstance(Countdown);
+    const gurujiService = createServiceInstance(Guruji);
+    const health2000Service = createServiceInstance(Health2000);
+    const valuemartService = createServiceInstance(Valuemart);
+    const warehouseService = createServiceInstance(Warehouse);
 
     if (options.crawlStoreTags) {
       if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
         await countdownService.crawlAndSyncProductCategoriesToStoreTags();
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('guruji') === 0)) {
+        await gurujiService.crawlAndSyncProductCategoriesToStoreTags();
       }
 
       if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
@@ -85,6 +85,10 @@ const start = async () => {
         await countdownService.crawlProducts();
       }
 
+      if (storeKeys.find(_ => _.localeCompare('guruji') === 0)) {
+        await gurujiService.crawlProducts();
+      }
+
       if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
         await health2000Service.crawlProducts();
       }
@@ -101,6 +105,10 @@ const start = async () => {
     if (options.crawlProductPrices) {
       if (storeKeys.find(_ => _.localeCompare('countdown') === 0)) {
         crawlProductsDetailsAndCurrentPrice(countdownService);
+      }
+
+      if (storeKeys.find(_ => _.localeCompare('guruji') === 0)) {
+        crawlProductsDetailsAndCurrentPrice(gurujiService);
       }
 
       if (storeKeys.find(_ => _.localeCompare('health2000') === 0)) {
