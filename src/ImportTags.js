@@ -20,10 +20,10 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
-initializeParse(options);
-
 const start = async () => {
   try {
+    initializeParse(options);
+
     const tags = await loadTags();
     const tagService = new TagService();
 

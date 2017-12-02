@@ -21,10 +21,10 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
-initializeParse(options);
-
 const start = async () => {
   try {
+    initializeParse(options);
+
     const storeTags = await loadStoreTags((await getStore(options.storeKey)).get('id'));
     const tags = await loadTags();
     const storeTagService = new StoreTagService();

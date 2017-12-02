@@ -22,8 +22,6 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
-initializeParse(options);
-
 const start = async () => {
   try {
     if (!options.storeKey) {
@@ -31,6 +29,8 @@ const start = async () => {
 
       return;
     }
+
+    await initializeParse(options);
 
     const allTags = await loadTags();
     const storeId = (await getStore(options.storeKey)).get('id');
@@ -177,8 +177,8 @@ const start = async () => {
               unitPrice:
                     unitPrice.count() === 2
                       ? Map({
-                        size: unitPrice.first(),
-                        price: parseFloat(unitPrice.last()),
+                        size: unitPrice.last(),
+                        price: parseFloat(unitPrice.first()),
                       })
                       : undefined,
             }));

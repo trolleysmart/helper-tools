@@ -20,10 +20,10 @@ const optionDefinitions = [
 ];
 const options = commandLineArgs(optionDefinitions);
 
-initializeParse(options);
-
 const start = async () => {
   try {
+    initializeParse(options);
+
     const allTags = await loadTags();
     const stapleTemplateItems = await loadStapleTemplateItems();
     const stapleTemplateItemService = new StapleTemplateItemService();
