@@ -1,6 +1,6 @@
 {
   "name": "trolley-smart-helper-tools",
-  "version": "1.0.0-alpha.22",
+  "version": "1.1.0",
   "description": "Trolley Smart Helper Tools",
   "main": "src/index.js",
   "scripts": {
@@ -27,16 +27,16 @@
     "csv-write-stream": "^2.0.0",
     "fs-extra": "^4.0.2",
     "immutable": "^4.0.0-rc.4",
-    "micro-business-common-javascript": "^1.0.0-alpha.15",
-    "micro-business-parse-server-common": "^1.0.2-alpha.39",
+    "micro-business-common-javascript": "^1.1.0",
+    "micro-business-parse-server-common": "^1.1.0",
     "mime": "^2.0.3",
     "moment": "^2.19.3",
     "monet": "^0.8.10",
-    "parse": "^1.10.2",
+    "parse": "^1.11.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "trolley-smart-parse-server-common": "^1.0.0-alpha.50",
-    "trolley-smart-store-crawler": "^1.0.0-alpha.69"
+    "trolley-smart-parse-server-common": "^1.1.0",
+    "trolley-smart-store-crawler": "^1.1.0"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
