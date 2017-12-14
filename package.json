@@ -1,6 +1,6 @@
 {
   "name": "trolley-smart-helper-tools",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "Trolley Smart Helper Tools",
   "main": "src/index.js",
   "scripts": {
@@ -25,18 +25,18 @@
     "command-line-args": "^4.0.7",
     "csv-parse": "^2.0.0",
     "csv-write-stream": "^2.0.0",
-    "fs-extra": "^4.0.2",
+    "fs-extra": "^5.0.0",
     "immutable": "^4.0.0-rc.4",
-    "micro-business-common-javascript": "^1.1.0",
-    "micro-business-parse-server-common": "^1.1.0",
+    "micro-business-common-javascript": "^1.1.1",
+    "micro-business-parse-server-common": "^1.1.3",
     "mime": "^2.0.3",
-    "moment": "^2.19.3",
+    "moment": "^2.19.4",
     "monet": "^0.8.10",
     "parse": "^1.11.0",
     "request": "^2.83.0",
     "request-promise": "^4.2.2",
-    "trolley-smart-parse-server-common": "^1.1.0",
-    "trolley-smart-store-crawler": "^1.1.0"
+    "trolley-smart-parse-server-common": "^1.1.1",
+    "trolley-smart-store-crawler": "^1.1.1"
   },
   "devDependencies": {
     "babel-cli": "^6.26.0",
@@ -44,16 +44,16 @@
     "babel-preset-es2015": "^6.24.1",
     "babel-preset-flow": "^6.23.0",
     "babel-preset-stage-0": "^6.24.1",
-    "eslint": "^4.12.1",
+    "eslint": "^4.13.1",
     "eslint-config-airbnb": "^16.1.0",
     "eslint-plugin-import": "^2.8.0",
-    "eslint-plugin-jsx-a11y": "6.0.2",
+    "eslint-plugin-jsx-a11y": "6.0.3",
     "eslint-plugin-react": "^7.5.1",
-    "flow-bin": "^0.60.1",
+    "flow-bin": "^0.61.0",
     "husky": "^0.14.3",
     "jest": "^21.2.1",
     "lint-staged": "^6.0.0",
-    "prettier": "^1.8.2",
+    "prettier": "^1.9.2",
     "uuid": "^3.1.0"
   },
   "jest": {
