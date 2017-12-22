@@ -5,8 +5,8 @@ import Immutable, { Map } from 'immutable';
 import commandLineArgs from 'command-line-args';
 import fs from 'fs';
 import csvParser from 'csv-parse';
-import { ImmutableEx } from 'micro-business-common-javascript';
-import { TagService } from 'trolley-smart-parse-server-common';
+import { ImmutableEx } from '@microbusiness/common-javascript';
+import { TagService } from '@trolleysmart/parse-server-common';
 import { initializeParse, loadTags } from './Common';
 
 const optionDefinitions = [

@@ -4,7 +4,7 @@ import BluebirdPromise from 'bluebird';
 import commandLineArgs from 'command-line-args';
 import csvWriter from 'csv-write-stream';
 import fs from 'fs';
-import { ImmutableEx } from 'micro-business-common-javascript';
+import { ImmutableEx } from '@microbusiness/common-javascript';
 import { initializeParse, getStore, loadStoreProducts, loadLatestProductPrice, loadStoreTags } from './Common';
 
 const optionDefinitions = [

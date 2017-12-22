@@ -3,7 +3,7 @@
 import { List, Map } from 'immutable';
 import { Maybe } from 'monet';
 import Parse from 'parse/node';
-import { ParseWrapperService, UserService } from 'micro-business-parse-server-common';
+import { ParseWrapperService, UserService } from '@microbusiness/parse-server-common';
 import {
   ProductPriceService,
   StapleItemService,
@@ -12,7 +12,7 @@ import {
   StoreService,
   StoreTagService,
   TagService,
-} from 'trolley-smart-parse-server-common';
+} from '@trolleysmart/parse-server-common';
 
 export const initializeParse = async (options) => {
   Parse.initialize(

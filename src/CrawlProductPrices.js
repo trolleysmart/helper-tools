@@ -1,7 +1,7 @@
 // @flow
 
 import commandLineArgs from 'command-line-args';
-import { Countdown, Guruji, Health2000, Valuemart, Warehouse } from 'trolley-smart-store-crawler';
+import { Countdown, Guruji, Health2000, Valuemart, Warehouse } from '@trolleysmart/store-crawler';
 import util from 'util';
 import { initializeParse } from './Common';
 
