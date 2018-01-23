@@ -38,7 +38,7 @@ export const getStore = async (key) => {
   const stores = await storeService.search(criteria, global.parseServerSessionToken);
 
   if (stores.count() > 1) {
-    throw new Error(`Multiple store found with store key: ${this.storeKey}.`);
+    throw new Error(`Multiple store found with store key: ${key}.`);
   }
 
   return stores.isEmpty()
